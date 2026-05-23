@@ -115,6 +115,7 @@ async function main() {
     await writePage(path.join('blogs', post.slug, 'index.html'), renderPost(post));
   }
   await fs.copyFile(path.join(root, 'site.css'), path.join(outDir, 'site.css'));
+  await fs.writeFile(path.join(outDir, '.nojekyll'), '');
   console.log(`✓ Built ${posts.length} post(s) to /docs`);
 }
 
