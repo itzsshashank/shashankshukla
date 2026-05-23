@@ -6,6 +6,7 @@ import { marked } from 'marked';
 const root = process.cwd();
 const blogDir = path.join(root, 'blogs');
 const outDir = path.join(root, 'docs');
+const basePath = process.env.BASE_PATH || '/shashankshukla';
 const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
 
 function escapeHtml(value) {
@@ -42,10 +43,10 @@ function pageShell({ title, description, body }) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="${escapeHtml(description)}" />
     <title>${escapeHtml(title)}</title>
-    <link rel="stylesheet" href="/shashankshukla/site.css" />
+    <link rel="stylesheet" href="${basePath}/site.css" />
   </head>
   <body>
-    <header class="site-header"><div class="wrap bar"><a class="brand" href="/shashankshukla/">Shashank Shukla</a><nav class="nav"><a href="/shashankshukla/">Home</a><a href="/shashankshukla/blogs/">All Posts</a></nav></div></header>
+    <header class="site-header"><div class="wrap bar"><a class="brand" href="${basePath}/">Shashank Shukla</a><nav class="nav"><a href="${basePath}/">Home</a><a href="${basePath}/blogs/">All Posts</a></nav></div></header>
     <main>${body}</main>
     <footer class="site-footer"><div class="wrap"></div></footer>
   </body>
@@ -69,7 +70,7 @@ async function readPosts() {
       const title = parsed.data.title || firstHeading(parsed.content) || slug.replace(/-/g, ' ');
       const description = parsed.data.description || excerptFrom(parsed.content);
       const publishedAt = parsed.data.date ? new Date(parsed.data.date) : stat.mtime;
-      posts.push({ file, slug, title, description, publishedAt, html: normalizeHtml(marked.parse(parsed.content)), url: `/shashankshukla/blogs/${slug}/` });
+      posts.push({ file, slug, title, description, publishedAt, html: normalizeHtml(marked.parse(parsed.content)), url: `${basePath}/blogs/${slug}/` });
     }
     posts.sort((left, right) => right.publishedAt - left.publishedAt);
     return posts;
@@ -81,7 +82,7 @@ async function readPosts() {
 function renderHome(posts) {
   const recent = posts.slice(0, 5);
   const recentHtml = recent.map((post) => `<a class="archive-item" href="${post.url}"><strong>${escapeHtml(post.title)}</strong><span class="meta">${dateFormatter.format(post.publishedAt)}</span></a>`).join('');
-  const body = `<section class="hero" style="padding: 2rem 0 1rem;"><div class="wrap hero-grid"><h1 style="font-size: 3rem; margin-bottom: 1rem;">Shashank Shukla</h1></div></section><section class="wrap"><div class="card" style="padding: 1.25rem 0;"><h2 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.3rem;">Recent Posts</h2><div class="archive" style="gap: 0.6rem;">${recentHtml}</div>${posts.length > 5 ? '<p style="text-align: center; margin-top: 1rem;"><a class="button primary" href="/shashankshukla/blogs/">View all</a></p>' : ''}</div></section>`;
+  const body = `<section class="hero" style="padding: 2rem 0 1rem;"><div class="wrap hero-grid"><h1 style="font-size: 3rem; margin-bottom: 1rem;">Shashank Shukla</h1></div></section><section class="wrap"><div class="card" style="padding: 1.25rem 0;"><h2 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.3rem;">Recent Posts</h2><div class="archive" style="gap: 0.6rem;">${recentHtml}</div>${posts.length > 5 ? `<p style="text-align: center; margin-top: 1rem;"><a class="button primary" href="${basePath}/blogs/">View all</a></p>` : ''}</div></section>`;
   return pageShell({ title: 'Shashank Shukla', description: 'Blog and notes.', body });
 }
 
