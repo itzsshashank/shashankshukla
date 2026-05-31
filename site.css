@@ -28,10 +28,10 @@ a { color: inherit; }
 .wrap { width: min(calc(100% - 2rem), var(--content)); margin: 0 auto; }
 .site-header, .site-footer { padding: 1.25rem 0; }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.brand { text-decoration: none; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.02em; }
-.nav { display: flex; gap: 0.9rem; flex-wrap: wrap; }
-.nav a, .pill, .button { text-decoration: none; border: 1px solid var(--line); background: rgba(255, 250, 241, 0.84); border-radius: 999px; padding: 0.7rem 1rem; }
-.hero { padding: 3.2rem 0 1.6rem; }
+.brand { text-decoration: none; font-size: 1rem; font-weight: 700; letter-spacing: 0.02em; }
+.nav { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+.nav a, .pill, .button { text-decoration: none; border: 1px solid var(--line); background: rgba(255, 250, 241, 0.84); border-radius: 999px; padding: 0.6rem 0.85rem; font-size: 0.95rem; }
+.hero { padding: 1.5rem 0 0.75rem; }
 .hero-grid { display: grid; gap: 1.25rem; }
 .kicker { display: inline-flex; align-items: center; gap: 0.5rem; width: fit-content; color: var(--accent); background: var(--accent-soft); border: 1px solid #d9ba8c; border-radius: 999px; padding: 0.4rem 0.8rem; font-size: 0.92rem; text-decoration: none; }
 h1, h2, h3, p { margin-top: 0; }

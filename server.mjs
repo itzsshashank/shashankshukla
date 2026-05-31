@@ -47,7 +47,7 @@ function pageShell({ title, description, body, pathName = '/' }) {
     <link rel="stylesheet" href="${basePath}site.css" />
   </head>
   <body>
-    <header class="site-header"><div class="wrap bar"><a class="brand" href="${basePath}">Shashank Shukla</a><nav class="nav"><a href="${basePath}">Home</a><a href="${basePath}blogs/">All Posts</a></nav></div></header>
+    <header class="site-header"><div class="wrap bar"><a class="brand" href="${basePath}">Shashank Shukla</a><nav class="nav"><a href="${basePath}">Home</a><a href="${basePath}blogs/">All Posts</a><a href="https://github.com/itzsshashank" target="_blank" rel="noopener noreferrer">GitHub</a></nav></div></header>
     <main>${body}</main>
     <footer class="site-footer"><div class="wrap"></div></footer>
   </body>
