@@ -13,6 +13,7 @@
 }
 
 * { box-sizing: border-box; }
+html { background-color: var(--bg); }
 
 body {
   margin: 0;
@@ -29,7 +30,7 @@ a { color: inherit; }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .brand { text-decoration: none; font-size: 1rem; font-weight: 700; letter-spacing: 0.02em; }
 .nav { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
-.nav a, .pill, .button { text-decoration: none; border: 1px solid var(--line); background: rgba(255, 250, 241, 0.84); border-radius: 999px; padding: 0.6rem 0.85rem; font-size: 0.95rem; display: inline-flex; align-items: center; justify-content: center; }
+.nav a, .pill, .button { text-decoration: none; border: 1px solid var(--line); background: #fffaf1; border-radius: 999px; padding: 0.6rem 0.85rem; font-size: 0.95rem; display: inline-flex; align-items: center; justify-content: center; }
 .hero { padding: 1.5rem 0 0.75rem; }
 .hero-grid { display: grid; gap: 1.25rem; }
 .kicker { display: inline-flex; align-items: center; gap: 0.5rem; width: fit-content; color: var(--accent); background: var(--accent-soft); border: 1px solid #d9ba8c; border-radius: 999px; padding: 0.4rem 0.8rem; font-size: 0.92rem; text-decoration: none; }
