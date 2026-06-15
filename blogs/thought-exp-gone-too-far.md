@@ -10,7 +10,7 @@ So I guess what we're living inside is a controlled hallucination.
 
 It eventually said these things sit on the borderline of neuroscience and philosophy. So I kept exploring, read a few experiments and studies. I am not a neuroscientist. I am not a philosopher. I am certainly not qualified to settle centuries-old questions. At most, I can read an experiment, apply logic, logic fails at some point, go back to the experiment, do the same thing again, and the loop goes on. Nevertheless, I moved to philosophy next, since it doesn't need a certificate and personal experiences and questions are mostly fair game.
 
-The AI gave me a few names. René Descartes, Plato, Kant. That was essentially it, the entire conversation verbatim revolved around those three. Which surprised me, because the ideas themselves, illusion, self, perception, reality, are the core questions in which many Bharatiya scriptures are rooted. Mandukya Upanishad, Vigyan Bhairav Tantra, Ashtavakra Gita, and more.
+The AI gave me a few names. René Descartes, Plato, Kant. That was essentially it, the entire conversation revolved around those three. Which surprised me because the ideas themselves, illusion, self, perception, reality, are verbatim the core questions in which many Bharatiya scriptures are rooted. Mandukya Upanishad, Vigyan Bhairav Tantra, Ashtavakra Gita, and more.
 
 So why did the conversation naturally gravitate towards Europeans? Were they the first to notice and speak about it? Did they invent this idea themselves? Or are modern knowledge systems simply structured around a particular historical narrative?
 
