@@ -136,12 +136,13 @@ function renderArchive(posts) {
 }
 
 function renderPost(post) {
+  const isEdited = post.lastEditedAt && post.publishedAt && post.lastEditedAt.getTime() > post.publishedAt.getTime();
   const historyHtml = post.historyUrl ? `
     <footer style="margin-top: 5rem; padding-top: 1rem; border-top: 1px solid var(--line); opacity: 0.4; transition: opacity 0.2s; font-size: 0.75rem; color: var(--muted);" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.4">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
         <div>
           <span>Published ${dateFormatter.format(post.publishedAt)}</span>
-          ${post.lastEditedAt > post.publishedAt ? `<span style="margin-left: 0.8rem;">Edited ${dateFormatter.format(post.lastEditedAt)}</span>` : ''}
+          ${isEdited ? `<span style="margin-left: 0.8rem;">Edited ${dateFormatter.format(post.lastEditedAt)}</span>` : ''}
         </div>
         <a href="${post.historyUrl}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;" onmouseover="this.style.borderColor='inherit'" onmouseout="this.style.borderColor='transparent'">History ↗</a>
       </div>
