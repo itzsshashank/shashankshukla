@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 
@@ -57,6 +58,21 @@ function normalizeHtml(html) {
   return html.replace(/<h1>(.*?)<\/h1>/, '');
 }
 
+function getGitMetadata(file) {
+  const relativePath = path.join('blogs', file);
+  try {
+    const log = execSync(`git log --follow --format=%aI -- "${relativePath}"`, { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
+    if (log.length === 0) return null;
+    const lastEditedAt = new Date(log[0]);
+    const publishedAt = new Date(log[log.length - 1]);
+    const gitPath = relativePath.replace(/\\/g, '/');
+    const historyUrl = `https://github.com/itzsshashank/shashankshukla/commits/main/${gitPath}`;
+    return { publishedAt, lastEditedAt, historyUrl };
+  } catch (error) {
+    return null;
+  }
+}
+
 async function readPosts() {
   try {
     const files = await fs.readdir(blogDir);
@@ -69,12 +85,22 @@ async function readPosts() {
       const slug = resolveSlug(parsed.data, file);
       const title = parsed.data.title || firstHeading(parsed.content) || slug.replace(/-/g, ' ');
       const description = parsed.data.description || excerptFrom(parsed.content);
-      const publishedAt = parsed.data.date ? new Date(parsed.data.date) : stat.mtime;
-      posts.push({ file, slug, title, description, publishedAt, html: normalizeHtml(marked.parse(parsed.content)), url: `${basePath}/blogs/${slug}/` });
+      
+      const gitMeta = getGitMetadata(file);
+      const publishedAt = parsed.data.date ? new Date(parsed.data.date) : (gitMeta?.publishedAt || stat.birthtime);
+      const lastEditedAt = gitMeta?.lastEditedAt || stat.mtime;
+      const historyUrl = gitMeta?.historyUrl;
+
+      posts.push({ 
+        file, slug, title, description, publishedAt, lastEditedAt, historyUrl,
+        html: normalizeHtml(marked.parse(parsed.content)), 
+        url: `${basePath}/blogs/${slug}/` 
+      });
     }
     posts.sort((left, right) => right.publishedAt - left.publishedAt);
     return posts;
   } catch (error) {
+    console.error('Error reading posts:', error);
     return [];
   }
 }
@@ -92,7 +118,15 @@ function renderArchive(posts) {
 }
 
 function renderPost(post) {
-  const body = `<section class="hero"><div class="wrap hero-grid"><h1>${escapeHtml(post.title)}</h1><p class="meta">${dateFormatter.format(post.publishedAt)}</p></div></section><section class="wrap"><article class="post prose card">${post.html}</article></section>`;
+  const historyHtml = post.historyUrl ? `
+    <footer style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--muted);">
+      <p style="margin: 0;">Published: ${dateFormatter.format(post.publishedAt)}</p>
+      <p style="margin: 0;">Last edited: ${dateFormatter.format(post.lastEditedAt)}</p>
+      <p style="margin: 0.5rem 0 0;"><a href="${post.historyUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">View commit history on GitHub</a></p>
+    </footer>
+  ` : '';
+
+  const body = `<section class="hero"><div class="wrap hero-grid"><h1>${escapeHtml(post.title)}</h1><p class="meta">${dateFormatter.format(post.publishedAt)}</p></div></section><section class="wrap"><article class="post prose card">${post.html}${historyHtml}</article></section>`;
   return pageShell({ title: `${post.title} — Shashank Shukla`, description: post.description, body });
 }
 
