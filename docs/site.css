@@ -56,5 +56,18 @@ h1 { font-size: clamp(2.5rem, 6vw, 4.9rem); line-height: 1; letter-spacing: -0.0
 .prose pre { overflow-x: auto; background: #1f1a17; color: #f7f0e7; border-radius: 16px; padding: 1rem 1.15rem; }
 .prose code { background: rgba(138, 90, 43, 0.08); padding: 0.16rem 0.35rem; border-radius: 6px; }
 .prose pre code { background: transparent; padding: 0; }
-@media (max-width: 860px) { .content-grid { grid-template-columns: 1fr; } .hero { padding-top: 2rem; } }
+@media (max-width: 860px) {
+  .content-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .content-grid > :not(:first-child) {
+    border-top: 1px solid var(--line);
+    padding-top: 2rem !important;
+  }
+  .recent-posts-list > .archive-item:nth-child(n+3) {
+    display: none;
+  }
+  .recent-posts-list > .archive-item:nth-child(2) {
+    border-bottom: none;
+  }
+  .hero { padding-top: 2rem; }
+}
 @media (max-width: 640px) { .wrap { width: min(calc(100% - 1.1rem), var(--content)); } h1 { font-size: clamp(2.1rem, 12vw, 3.3rem); } }
