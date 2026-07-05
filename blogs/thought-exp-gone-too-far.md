@@ -1,3 +1,8 @@
+---
+title: "A Thought Experiment Gone Too Far"
+description: "A curiosity-driven exploration of perception, consciousness, neuroscience, AI, and why Bharatiya philosophical traditions deserve more recognition in discussions of reality."
+---
+
 # A Thought Experiment Gone Too Far
 
 I was watching a vlog of a man who built a hovercraft and spent three days alone near the Arctic, traveling in it and camping. There he mentioned motion sickness. I instantly thought of the vestibular system in the inner ear, the cerebellum, and all that. I asked AI, particularly ChatGPT, for some thought experiments so it could simulate ideas around what I was thinking. Things like, what if the fluid of the inner ear somehow vanished? What if the hair cells relying on that fluid vanished? And eventually I arrived at a much older question, are things real in the way we perceive them to be?

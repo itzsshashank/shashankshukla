@@ -1,3 +1,8 @@
+---
+title: "Finished Reading The Godfather. Then I Looked Around."
+description: "Reflections after reading The Godfather: power, influence, tribalism, politics, and the hidden patterns that shape human behavior and institutions."
+---
+
 # Finished Reading The Godfather. Then I Looked Around.
 
 Completed reading The Godfather novel just two hours ago. Took me roughly two months, not reading every day, but finished it. Great novel. Surprisingly practical on power dynamics, at least from the outside looking in. Whether real power fully operates this way, I don’t know. But parts of it felt uncomfortably real.

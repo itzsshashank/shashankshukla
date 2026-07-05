@@ -1,0 +1,13 @@
+# Shashank Shukla
+
+I build things and dump thoughts here. Backend systems, markets, and why people do what they do.
+
+## Key Pages
+- [Home](https://itzsshashank.github.io/shashankshukla/)
+- [Projects](https://itzsshashank.github.io/shashankshukla/projects/) - Features Xinsight AI (Chrome extension) and TRADEiLOG.
+- [All Posts](https://itzsshashank.github.io/shashankshukla/blogs/) - Archive of all articles.
+
+## Articles
+- [A Thought Experiment Gone Too Far](https://itzsshashank.github.io/shashankshukla/blogs/thought-exp-gone-too-far/): A curiosity-driven exploration of perception, consciousness, neuroscience, AI, and why Bharatiya philosophical traditions deserve more recognition in discussions of reality.
+- [Finished Reading The Godfather. Then I Looked Around.](https://itzsshashank.github.io/shashankshukla/blogs/godfather-novel/): Reflections after reading The Godfather: power, influence, tribalism, politics, and the hidden patterns that shape human behavior and institutions.
+- [Finished My First Novel in One Sitting](https://itzsshashank.github.io/shashankshukla/blogs/reading-novel/): Thoughts on reading Around the World in Eighty Days in a single sitting.

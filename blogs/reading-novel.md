@@ -1,3 +1,8 @@
+---
+title: "Finished My First Novel in One Sitting"
+description: "Thoughts on reading Around the World in Eighty Days in a single sitting."
+---
+
 # Finished My First Novel in One Sitting
 
 I didn't know I could finish a novel in one sitting until I picked up *Around the World in Eighty Days*. Not flexing, just realized.
