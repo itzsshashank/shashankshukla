@@ -83,17 +83,21 @@ function normalizeHtml(html) {
 
 function getGitMetadata(file) {
   const relativePath = path.join('blogs', file);
+  const gitPath = relativePath.replace(/\\/g, '/');
+  const historyUrl = `https://github.com/itzsshashank/shashankshukla/commits/main/${gitPath}`;
+  
   try {
     const log = execSync(`git log --follow --format=%aI -- "${relativePath}"`, { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
-    if (log.length === 0) return null;
-    const lastEditedAt = new Date(log[0]);
-    const publishedAt = new Date(log[log.length - 1]);
-    const gitPath = relativePath.replace(/\\/g, '/');
-    const historyUrl = `https://github.com/itzsshashank/shashankshukla/commits/main/${gitPath}`;
-    return { publishedAt, lastEditedAt, historyUrl };
+    if (log.length > 0) {
+      const lastEditedAt = new Date(log[0]);
+      const publishedAt = new Date(log[log.length - 1]);
+      return { publishedAt, lastEditedAt, historyUrl };
+    }
   } catch (error) {
-    return null;
+    // Fall back to file stats if git command fails or is not in a git repo
   }
+  
+  return { publishedAt: null, lastEditedAt: null, historyUrl };
 }
 
 async function readPosts() {
@@ -104,14 +108,13 @@ async function readPosts() {
       const fullPath = path.join(blogDir, file);
       const raw = await fs.readFile(fullPath, 'utf8');
       const parsed = matter(raw);
-      const stat = await fs.stat(fullPath);
       const slug = resolveSlug(parsed.data, file);
       const title = parsed.data.title || firstHeading(parsed.content) || slug.replace(/-/g, ' ');
       const description = parsed.data.description || excerptFrom(parsed.content);
       
       const gitMeta = getGitMetadata(file);
-      const publishedAt = parsed.data.date ? new Date(parsed.data.date) : (gitMeta?.publishedAt || stat.birthtime);
-      const lastEditedAt = gitMeta?.lastEditedAt || stat.mtime;
+      const publishedAt = parsed.data.date ? new Date(parsed.data.date) : (gitMeta?.publishedAt || new Date());
+      const lastEditedAt = gitMeta?.lastEditedAt || new Date();
       const historyUrl = gitMeta?.historyUrl;
 
       posts.push({ file, slug, title, description, publishedAt, lastEditedAt, historyUrl, sourcePath: `/blogs/${file}`, url: `${basePath}blogs/${slug}/` });
@@ -131,13 +134,12 @@ async function renderPostContent(slug) {
     const fullPath = path.join(blogDir, file);
     const raw = await fs.readFile(fullPath, 'utf8');
     const parsed = matter(raw);
-    const stat = await fs.stat(fullPath);
     const title = parsed.data.title || firstHeading(parsed.content) || slug.replace(/-/g, ' ');
     const description = parsed.data.description || excerptFrom(parsed.content);
     
     const gitMeta = getGitMetadata(file);
-    const publishedAt = parsed.data.date ? new Date(parsed.data.date) : (gitMeta?.publishedAt || stat.birthtime);
-    const lastEditedAt = gitMeta?.lastEditedAt || stat.mtime;
+    const publishedAt = parsed.data.date ? new Date(parsed.data.date) : (gitMeta?.publishedAt || new Date());
+    const lastEditedAt = gitMeta?.lastEditedAt || new Date();
     const historyUrl = gitMeta?.historyUrl;
 
     const html = normalizeHtml(marked.parse(parsed.content));
