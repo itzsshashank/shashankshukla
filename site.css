@@ -71,3 +71,115 @@ h1 { font-size: clamp(2.5rem, 6vw, 4.9rem); line-height: 1; letter-spacing: -0.0
   .hero { padding-top: 2rem; }
 }
 @media (max-width: 640px) { .wrap { width: min(calc(100% - 1.1rem), var(--content)); } h1 { font-size: clamp(2.1rem, 12vw, 3.3rem); } }
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Footnotes styling */
+.footnotes, [data-footnotes] {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.footnotes h2, [data-footnotes] h2 {
+  font-size: 1.05rem;
+  margin-bottom: 0.8rem;
+  color: var(--text);
+}
+.footnotes ol, [data-footnotes] ol {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+.footnotes li, [data-footnotes] li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+/* If the footnotes section is preceded by a heading (e.g. Works Cited), shift the margin & border to that heading instead */
+.prose h1:has(+ .footnotes),
+.prose h2:has(+ .footnotes),
+.prose h3:has(+ .footnotes),
+.prose h4:has(+ .footnotes),
+.prose h5:has(+ .footnotes),
+.prose h6:has(+ .footnotes) {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.prose h1 + .footnotes,
+.prose h2 + .footnotes,
+.prose h3 + .footnotes,
+.prose h4 + .footnotes,
+.prose h5 + .footnotes,
+.prose h6 + .footnotes {
+  margin-top: 0.5rem;
+  padding-top: 0;
+  border-top: none;
+}
+.footnote-ref, [data-footnote-ref] {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+  margin-left: 0.1rem;
+  padding: 0 0.15rem;
+}
+.footnote-ref:hover, [data-footnote-ref]:hover {
+  text-decoration: underline;
+}
+.footnote-backref, [data-footnote-backref] {
+  text-decoration: none;
+  color: var(--accent);
+  margin-left: 0.25rem;
+}
+.footnote-backref:hover, [data-footnote-backref]:hover {
+  text-decoration: underline;
+}
+
+/* Tables styling */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+}
+.prose th, .prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left; /* Align header with content by default */
+}
+.prose th {
+  font-weight: 600;
+  color: var(--text);
+  background-color: rgba(138, 90, 43, 0.03);
+  border-bottom: 2px solid var(--line);
+}
+.prose tr:hover {
+  background-color: rgba(138, 90, 43, 0.015);
+}
+
+/* Explicit alignment from Markdown */
+.prose th[align="center"], .prose td[align="center"] {
+  text-align: center;
+}
+.prose th[align="right"], .prose td[align="right"] {
+  text-align: right;
+}
+.prose th[align="left"], .prose td[align="left"] {
+  text-align: left;
+}
+
+

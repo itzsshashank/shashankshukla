@@ -2,37 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://itzsshashank.github.io/shashankshukla/</loc>
-    <lastmod>2026-07-05T20:14:34.016Z</lastmod>
+    <lastmod>2026-07-07T19:48:46.746Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://itzsshashank.github.io/shashankshukla/projects/</loc>
-    <lastmod>2026-07-05T20:14:34.016Z</lastmod>
+    <lastmod>2026-07-07T19:48:46.746Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://itzsshashank.github.io/shashankshukla/blogs/</loc>
-    <lastmod>2026-07-05T20:14:34.016Z</lastmod>
+    <lastmod>2026-07-07T19:48:46.746Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantir/</loc>
+    <lastmod>2026-07-07T19:46:49.566Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://itzsshashank.github.io/shashankshukla/blogs/thought-exp-gone-too-far/</loc>
-    <lastmod>2026-06-15T16:12:55.000Z</lastmod>
+    <lastmod>2026-07-05T20:47:08.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://itzsshashank.github.io/shashankshukla/blogs/godfather-novel/</loc>
-    <lastmod>2026-05-28T16:05:23.000Z</lastmod>
+    <lastmod>2026-07-05T20:47:08.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://itzsshashank.github.io/shashankshukla/blogs/reading-novel/</loc>
-    <lastmod>2026-05-23T08:32:31.000Z</lastmod>
+    <lastmod>2026-07-05T20:47:08.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

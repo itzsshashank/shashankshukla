@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Understanding Palantir — Shashank Shukla</title>
+    <meta name="description" content="An investigative history of Palantir Technologies, exploring how strategy, product design, procurement, litigation, and governance shaped one of the world&#39;s most unconventional software companies." />
+    <link rel="canonical" href="https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantir/" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantir/" />
+    <meta property="og:title" content="Understanding Palantir — Shashank Shukla" />
+    <meta property="og:description" content="An investigative history of Palantir Technologies, exploring how strategy, product design, procurement, litigation, and governance shaped one of the world&#39;s most unconventional software companies." />
+    <meta property="og:site_name" content="Shashank Shukla" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantir/" />
+    <meta name="twitter:title" content="Understanding Palantir — Shashank Shukla" />
+    <meta name="twitter:description" content="An investigative history of Palantir Technologies, exploring how strategy, product design, procurement, litigation, and governance shaped one of the world&#39;s most unconventional software companies." />
+    
+    <link rel="stylesheet" href="/shashankshukla/site.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantir/"
+        },
+        "headline": "Understanding Palantir",
+        "description": "An investigative history of Palantir Technologies, exploring how strategy, product design, procurement, litigation, and governance shaped one of the world's most unconventional software companies.",
+        "datePublished": "2026-07-06T15:05:55.508Z",
+        "dateModified": "2026-07-07T19:46:49.566Z",
+        "author": {
+          "@type": "Person",
+          "name": "Shashank Shukla",
+          "url": "https://itzsshashank.github.io/shashankshukla/"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Shashank Shukla",
+          "url": "https://itzsshashank.github.io/shashankshukla/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header"><div class="wrap bar"><a class="brand" href="/shashankshukla/">Shashank Shukla</a><nav class="nav"><a href="/shashankshukla/">Home</a><a href="/shashankshukla/projects/">Projects</a><a href="/shashankshukla/blogs/">All Posts</a><a href="https://github.com/itzsshashank" target="_blank" rel="noopener noreferrer" aria-label="GitHub" style="padding: 0.5rem;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></nav></div></header>
+    <main><section class="hero"><div class="wrap hero-grid"><h1>Understanding Palantir</h1><p class="meta">Jul 6, 2026, 08:35 PM</p></div></section><section class="wrap"><article class="post prose card">
+<h2>The Making of an Unconventional Software Company</h2>
+<hr>
+<h2>1. The Post-9/11 Paradigm and the Founding Context (2003-2008)</h2>
+<p>The establishment of Palantir Technologies in May 2003 occurred at a unique intersection of geopolitical crisis and technological stagnation. The September 11 attacks had already exposed the U.S. intelligence community&#39;s catastrophic failure to &quot;connect the dots&quot; across siloed databases, a failure formally documented by the Congressional Joint Inquiry in December 2002 and later reaffirmed by the 9/11 Commission Report in 2004.<sup><a id="footnote-ref-1" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup> At the time, enterprise software and government IT procurement were dominated by legacy relational databases, which required pre-defined schemas: integrating a new data source meant painstakingly modifying tables and relationships by hand.<sup><a id="footnote-ref-4" href="#footnote-4" data-footnote-ref aria-describedby="footnote-label">2</a></sup> This architecture was fundamentally incompatible with the fluid, asymmetric nature of global counter-terrorism, which relied on combining <em>structured</em> data (financial transactions) with <em>unstructured</em> data (field reports, signals intelligence).<sup><a id="footnote-ref-2" href="#footnote-2" data-footnote-ref aria-describedby="footnote-label">3</a></sup> </p>
+<p>The conceptual solution didn&#39;t originate in the defense industrial base, it came from fintech. Following the sale of PayPal to eBay in 2002 for $1.5 billion, members of the so-called &quot;PayPal Mafia,&quot; most notably <strong>Peter Thiel</strong>, Max Levchin, and Nathan Gettings, recognized that the architecture they&#39;d built to detect cyber fraud could be repurposed for national security.<sup><a id="footnote-ref-1-2" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup> During PayPal&#39;s early years, pure algorithmic fraud detection had failed because organized cybercriminals rapidly adapted to static rules.<sup><a id="footnote-ref-1-3" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup> To counter this, PayPal engineers built a hybrid system nicknamed <strong>&quot;Igor,&quot;</strong> which abandoned the goal of full automation: it used algorithms to flag suspicious activity, then handed those flagged anomalies to human analysts for the final call.<sup><a id="footnote-ref-6" href="#footnote-6" data-footnote-ref aria-describedby="footnote-label">4</a></sup></p>
+<p>Peter Thiel bankrolled the initial prototype with an estimated <strong>$30 million</strong> of his own capital, recruiting former PayPal engineer Nathan Gettings and Stanford students Joe Lonsdale and Stephen Cohen.<sup><a id="footnote-ref-1-4" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup> In 2004, Thiel recruited <strong>Alex Karp</strong>, a Stanford Law classmate with a PhD in philosophy and a background in asset management, as Chief Executive Officer.<sup><a id="footnote-ref-1-5" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup> The selection of Karp, an individual with no formal engineering or technology startup experience, was highly unconventional. The documented facts indicate that Thiel explicitly sought a leader who could navigate the complex civil liberties implications of mass data aggregation.<sup><a id="footnote-ref-1-6" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup> By framing Palantir as a <em>&quot;mission-oriented company&quot;</em> designed to &quot;reduce terrorism while preserving civil liberties,&quot; Karp gave the firm a defensive ethical narrative that purely technical founders could not have articulated on their own.<sup><a id="footnote-ref-1-7" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup></p>
+<p>The industry&#39;s default path at the time was fully automated, rules-based algorithmic threat detection, the model that promised the high margins of a typical SaaS business. Palantir rejected this. It deliberately sacrificed scalability and margin by keeping human analysts in the loop, relying heavily on embedded <strong>&quot;Forward Deployed Engineers&quot; (FDEs)</strong> who travelled to client sites to hand-build data pipelines.<sup><a id="footnote-ref-12" href="#footnote-12" data-footnote-ref aria-describedby="footnote-label">5</a></sup> The lesson from Igor was that adaptive adversaries eventually defeat static algorithms, so Palantir bet on <strong>&quot;Intelligence Augmentation,&quot;</strong> software that amplifies human judgment rather than replacing it.<sup><a id="footnote-ref-1-8" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup></p>
+<h2>2. The In-Q-Tel Investment and the Reference Customer Wedge (2005)</h2>
+<p>In 2005, Palantir secured roughly <strong>$2 million</strong> from <strong>In-Q-Tel (IQT)</strong>, the independent, not-for-profit venture arm chartered by the CIA.<sup><a id="footnote-ref-9" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup> The dollar figure was immaterial next to Thiel&#39;s seed money; what mattered was the access it bought inside the federal procurement ecosystem.<sup><a id="footnote-ref-9-2" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></p>
+<p>The specifics of Palantir&#39;s earliest classified deployments remain protected by the U.S. government, so the exact algorithmic iterations driven by CIA analysts in this period are not publicly documented. What <em>is</em> on the record is that the In-Q-Tel Interface Center (QIC) enabled direct, iterative collaboration between Palantir&#39;s engineers and working intelligence analysts.<sup><a id="footnote-ref-9-3" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup> That relationship gave Palantir three durable advantages: an unmatched product feedback loop, refined against real classified demands for years;<sup><a id="footnote-ref-9-4" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup> the security clearances and operational experience needed to deploy inside Top Secret/SCI air-gapped environments, a structural barrier that shut out most Silicon Valley competitors;<sup><a id="footnote-ref-13" href="#footnote-13" data-footnote-ref aria-describedby="footnote-label">7</a></sup> and, because of IQT&#39;s imprimatur, the ability to spread almost entirely by word-of-mouth across the National Security Agency (NSA) and Federal Bureau of Investigation (FBI), bypassing a traditional enterprise sales force.<sup><a id="footnote-ref-9-5" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></p>
+<p>Where a startup accepting government-backed capital would typically also grant board seats and governance rights to that investor, Thiel and Karp did the opposite: they declined to offer In-Q-Tel a board seat, a policy they held to through every subsequent funding round.<sup><a id="footnote-ref-9-6" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup> The apparent reasoning was existential: ceding governance to a government VC risked slowly turning Palantir into a conventional &quot;Beltway Bandit,&quot; a defense consultancy living on bespoke, cost-plus contracts, rather than a product company.<sup><a id="footnote-ref-9-7" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></p>
+<h2>3. The Gotham-Only Era and Aggressive Interoperability (2008-2015)</h2>
+<p>Palantir&#39;s first flagship platform, <strong>Palantir Gotham</strong> (originally &quot;Palantir Government&quot;), launched in 2008.<sup><a id="footnote-ref-20" href="#footnote-20" data-footnote-ref aria-describedby="footnote-label">8</a></sup> Gotham ingested both structured data (relational databases, spreadsheets) and unstructured data (field reports, imagery), unifying them into objects mapped across nodes and edges on a graphical interface.<sup><a id="footnote-ref-12-2" href="#footnote-12" data-footnote-ref aria-describedby="footnote-label">5</a></sup></p>
+<p>Despite Gotham&#39;s technically superior dynamic ontology, Palantir hit a serious go-to-market wall in the late 2000s: intelligence and law-enforcement agencies were deeply entrenched with IBM&#39;s <strong>i2 Analyst&#39;s Notebook</strong>, and analysts had years of historical intelligence data locked inside i2&#39;s proprietary database structures.<sup><a id="footnote-ref-22" href="#footnote-22" data-footnote-ref aria-describedby="footnote-label">9</a></sup></p>
+<p>Facing a monopolistic incumbent that held its clients&#39; historical data hostage, the conventional response would have been to wait for customers to manually export their own data, or to lobby i2 to build standard APIs. Palantir instead chose a far more aggressive route. According to a federal lawsuit filed in 2010, Palantir&#39;s Director of Business Development, <strong>Shyam Sankar</strong>, used a Florida-based shell company named &quot;SRS Enterprises,&quot; registered to his parents, to acquire licenses of i2 software under false pretenses.<sup><a id="footnote-ref-24" href="#footnote-24" data-footnote-ref aria-describedby="footnote-label">10</a></sup> The complaint alleged that Palantir&#39;s engineers then used this access to reverse-engineer the software and build an import tool called <strong>&quot;iBaseCrawl.&quot;</strong><sup><a id="footnote-ref-24-2" href="#footnote-24" data-footnote-ref aria-describedby="footnote-label">10</a></sup> The tool let government analysts extract their historical data from i2 and port it directly into Gotham, neutralizing i2&#39;s data lock-in.<sup><a id="footnote-ref-24-3" href="#footnote-24" data-footnote-ref aria-describedby="footnote-label">10</a></sup></p>
+<p>In February 2011, a federal judge approved a settlement resolving the copyright and breach-of-contract claims.<sup><a id="footnote-ref-25" href="#footnote-25" data-footnote-ref aria-describedby="footnote-label">11</a></sup> Palantir and i2 issued only a brief joint statement describing the resolution as reached &quot;to the mutual satisfaction of all parties,&quot; and both sides agreed to make no further public comment.<sup><a id="footnote-ref-18" href="#footnote-18" data-footnote-ref aria-describedby="footnote-label">12</a></sup> The terms were never officially disclosed. A commonly cited figure, that Palantir paid i2 roughly <strong>$10 million</strong>, appears repeatedly in secondary reporting and on Wikipedia, but it does not trace back to any confirmed primary source, so it should be treated as widely repeated rather than confirmed.<sup><a id="footnote-ref-9-8" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></p>
+<p>The underlying logic was about <em>data gravity</em>: unless the friction of migrating historical intelligence data was reduced to near zero, analysts simply wouldn&#39;t adopt Gotham no matter how good it was. And the calculation made sense financially, even a costly legal settlement is often small relative to the lifetime value of capturing an entire market&#39;s historical data ecosystem, since data lock-in like this tends to keep customers for years.</p>
+<h2>4. Breaking the Federal IT Monopoly: The FASA Litigation (2016)</h2>
+<p>By the mid-2010s Palantir had established Gotham across the intelligence community and wanted access to the far larger procurement budgets of the U.S. military. It tried to bid on the Army&#39;s <strong>Distributed Common Ground System, Army Increment 2 (DCGS-A2)</strong>, a procurement program worth hundreds of millions of dollars designed to process and disseminate multi-sensor intelligence.<sup><a id="footnote-ref-28" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">13</a></sup></p>
+<p>Gotham was already being used successfully by Marines and Special Forces units in active combat zones, brought in through urgent operational-needs requests. Yet the Army issued a single-source, <strong>indefinite-delivery/indefinite-quantity (IDIQ)</strong> solicitation structured to pay traditional defense contractors to build an entirely new system from scratch under the military&#39;s preferred cost-plus model.<sup><a id="footnote-ref-28-2" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">13</a></sup></p>
+<p>Where most vendors facing a biased solicitation would either partner with a prime contractor to meet the bespoke requirements or simply walk away, Palantir instead took the highly unusual step of suing its own prospective customer, Army leadership, in federal court.<sup><a id="footnote-ref-29" href="#footnote-29" data-footnote-ref aria-describedby="footnote-label">14</a></sup> In 2016, it filed a bid protest in the Court of Federal Claims anchored on the <strong>Federal Acquisition Streamlining Act (FASA)</strong> of 1994, codified at 10 U.S.C. § 2377, which requires agencies to research and procure commercially available items &quot;to the maximum extent practicable&quot; before funding custom R&amp;D.<sup><a id="footnote-ref-30" href="#footnote-30" data-footnote-ref aria-describedby="footnote-label">15</a></sup> The court ruled for Palantir and issued a permanent injunction against the Army&#39;s custom-build solicitation, forcing the military to evaluate Gotham as a commercial item.<sup><a id="footnote-ref-28-3" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">13</a></sup></p>
+<p>The long-term payoff was substantial. <strong>In 2019, the Army awarded the $876 million, 10-year &quot;Capability Drop 1&quot; IDIQ contract jointly to Palantir and Raytheon</strong>, an arrangement under which the two companies would compete against each other for individual delivery and task orders.<sup><a id="footnote-ref-32" href="#footnote-32" data-footnote-ref aria-describedby="footnote-label">16</a></sup> Palantir won the <em>first</em> task order under that contract, becoming, notably, the first Silicon Valley software company (rather than a traditional prime) to lead a defense program of record.<sup><a id="footnote-ref-30-2" href="#footnote-30" data-footnote-ref aria-describedby="footnote-label">15</a></sup></p>
+<p>Palantir&#39;s underlying read on the situation was structural: in its view, Pentagon procurement mechanics were biased against commercial SaaS, favoring custom-development contracts that tended toward longer timelines and higher costs. Forcing open a genuinely competitive process required litigation, not just a better product.</p>
+<h2>5. The Commercial Pivot: From Metropolis to Foundry (2016-2022)</h2>
+<p>While Gotham dominated defense, Palantir initially struggled to scale into the commercial enterprise market. Its first attempt was <strong>Palantir Metropolis</strong>, launched in 2010 with Thomson Reuters as &quot;QA Studio,&quot; aimed at quantitative financial analytics, risk management, and fraud detection for hedge funds and banks.<sup><a id="footnote-ref-9-9" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></p>
+<p>Metropolis never scaled well: its bespoke financial deployments needed too many dedicated engineers per client, threatening to turn Palantir into an unscalable IT consultancy rather than a high-margin software business.<sup><a id="footnote-ref-36" href="#footnote-36" data-footnote-ref aria-describedby="footnote-label">17</a></sup> By 2016 it was phased out entirely, a real product failure that forced a strategic reset.<sup><a id="footnote-ref-20-2" href="#footnote-20" data-footnote-ref aria-describedby="footnote-label">8</a></sup></p>
+<p>The reset was <strong>Palantir Foundry</strong>, launched in 2016 as an industry-agnostic &quot;operating system&quot; for the enterprise, able to integrate supply chains, manufacturing sensors, and ERP systems into a single ontology.<sup><a id="footnote-ref-10" href="#footnote-10" data-footnote-ref aria-describedby="footnote-label">18</a></sup> Its proof of concept came through a 2017 partnership with <strong>Airbus</strong>, culminating in the <strong>&quot;Skywise&quot;</strong> platform.<sup><a id="footnote-ref-40" href="#footnote-40" data-footnote-ref aria-describedby="footnote-label">19</a></sup> Airbus faced an unusually hard integration problem: building the A350 meant synchronizing roughly 5 million individual parts across hundreds of teams, suppliers, and plants worldwide.<sup><a id="footnote-ref-40-2" href="#footnote-40" data-footnote-ref aria-describedby="footnote-label">19</a></sup> Foundry unified Airbus&#39;s fragmented telemetry, logistics, and maintenance data into a single asset, and the collaboration is widely credited with <strong>accelerating A350 production by 33%</strong>.<sup><a id="footnote-ref-40-3" href="#footnote-40" data-footnote-ref aria-describedby="footnote-label">19</a></sup> Palantir and Airbus later extended Skywise to more than 100 airlines and thousands of suppliers.<sup><a id="footnote-ref-21" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">20</a></sup></p>
+<p>Rather than continue building one-off forks of Gotham for scattered commercial clients, Palantir chose to absorb years of R&amp;D cost abstracting its capabilities into the generalized Foundry platform and the accompanying <strong>Apollo</strong> delivery infrastructure.<sup><a id="footnote-ref-13-2" href="#footnote-13" data-footnote-ref aria-describedby="footnote-label">7</a></sup> The company needed the underlying architecture decoupled from bespoke FDE services in order to be valued as a true software business rather than a consultancy.</p>
+<h2>6. The &quot;Dark Years,&quot; IPO Delay, and the KT4 Litigation (2015-2020)</h2>
+<p>By 2015, Palantir had reached a private-market valuation of <strong>$20 billion</strong>, having raised roughly $2.75 billion in equity from private funders including Founders Fund and Tiger Global.<sup><a id="footnote-ref-10-2" href="#footnote-10" data-footnote-ref aria-describedby="footnote-label">18</a></sup> Despite pressure from investors seeking liquidity, CEO Alex Karp refused to pursue an IPO, publicly stating that going public would make &quot;running a company like ours very difficult.&quot;<sup><a id="footnote-ref-9-10" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></p>
+<p>Staying private for 17 years meant Palantir had to manage a shadow secondary market, private tender offers and stock buybacks, to give early employees and investors any liquidity at all.<sup><a id="footnote-ref-45" href="#footnote-45" data-footnote-ref aria-describedby="footnote-label">21</a></sup> The lack of public-market discipline also left it exposed internally. In 2016, a bitter dispute erupted with early investor <strong>Marc Abramowitz</strong>, operating through an entity called <strong>KT4 Partners</strong>.<sup><a id="footnote-ref-47" href="#footnote-47" data-footnote-ref aria-describedby="footnote-label">22</a></sup> Abramowitz, who had been given office space at Palantir&#39;s headquarters and deep access to its roadmap, filed several patents in his own name covering healthcare and cybersecurity data analysis, and attempted to trademark &quot;Shire,&quot; directly encroaching on Palantir&#39;s Tolkien-themed branding.<sup><a id="footnote-ref-49" href="#footnote-49" data-footnote-ref aria-describedby="footnote-label">23</a></sup></p>
+<p>Palantir sued Abramowitz for trade-secret theft, alleging he&#39;d used his privileged access to misappropriate proprietary strategy.<sup><a id="footnote-ref-48" href="#footnote-48" data-footnote-ref aria-describedby="footnote-label">24</a></sup> In retaliation, Abramowitz used his standing as a major shareholder to demand internal corporate records under <strong>Section 220 of the Delaware General Corporation Law</strong>, seeking to investigate alleged mismanagement.<sup><a id="footnote-ref-47-2" href="#footnote-47" data-footnote-ref aria-describedby="footnote-label">22</a></sup> The Delaware Supreme Court ultimately sided with KT4, citing Palantir&#39;s own failure to keep traditional corporate formalities; the court found that leadership often conducted board business over informal email rather than documented resolutions, and ordered the production of those communications.<sup><a id="footnote-ref-47-3" href="#footnote-47" data-footnote-ref aria-describedby="footnote-label">22</a></sup></p>
+<h2>7. The 2020 Direct Listing and the Class F Governance Shield</h2>
+<p>On September 30, 2020, Palantir went public on the NYSE under the ticker <strong>PLTR</strong>.<sup><a id="footnote-ref-17" href="#footnote-17" data-footnote-ref aria-describedby="footnote-label">25</a></sup></p>
+<p>Rather than a traditional underwritten IPO, Palantir chose a <strong>Direct Floor Listing</strong>.<sup><a id="footnote-ref-10-3" href="#footnote-10" data-footnote-ref aria-describedby="footnote-label">18</a></sup> It gave up the ability to raise new primary capital on listing day, but in exchange avoided hundreds of millions in underwriting fees, prevented banks from artificially underpricing shares for their institutional clients, and, critically, eliminated the standard 180-day lock-up, giving employees and early investors immediate liquidity.<sup><a id="footnote-ref-10-4" href="#footnote-10" data-footnote-ref aria-describedby="footnote-label">18</a></sup></p>
+<p>Subjecting a company this reliant on controversial defense and immigration-enforcement contracts to public market whims carried real risk, so Palantir built an unusually aggressive governance structure into its S-1.<sup><a id="footnote-ref-21-2" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">20</a></sup> Alongside standard Class A (one vote/share) and Class B (ten votes/share) stock, it created a third class: <strong>Class F</strong>, held in a Founder Voting Trust by Karp, Cohen, and Thiel.<sup><a id="footnote-ref-21-3" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">20</a></sup> Class F shares carry a variable vote count engineered so that, as long as the founders hold a minimum &quot;Ownership Threshold&quot; of 100 million shares, they retain up to <strong>49.999999%</strong> of total voting power, regardless of how much Class A or B stock is issued later.<sup><a id="footnote-ref-21-4" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">20</a></sup> In effect, Palantir can issue additional Class A or Class B stock to raise capital without ever diluting the founders&#39; voting control below their guaranteed threshold.</p>
+<h2>8. The Artificial Intelligence Platform (AIP) and the Bootcamp Model (2023-2026)</h2>
+<p>In April 2023, amid the explosion of generative AI, Palantir launched its <strong>Artificial Intelligence Platform (AIP)</strong>.<sup><a id="footnote-ref-2-2" href="#footnote-2" data-footnote-ref aria-describedby="footnote-label">3</a></sup> Enterprise and defense adoption of LLMs faced real structural risks, including hallucination, lack of auditability, and leakage of classified or proprietary data.<sup><a id="footnote-ref-13-3" href="#footnote-13" data-footnote-ref aria-describedby="footnote-label">7</a></sup> Palantir&#39;s answer was to ground agnostic LLMs (OpenAI&#39;s models, Anthropic&#39;s Claude, etc.) inside its existing Foundry Ontology, which already served as a secure, living map of a company&#39;s data, business logic, and access controls, meaning an AI agent could only touch data and trigger actions the specific human operator was cleared to authorize.<sup><a id="footnote-ref-9-11" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></p>
+<p>Historically, Palantir&#39;s enterprise sales cycles ran 9 to 12 months of discovery, proofs-of-concept, and security audits.<sup><a id="footnote-ref-19" href="#footnote-19" data-footnote-ref aria-describedby="footnote-label">26</a></sup> With AIP, the company restructured its go-to-market entirely around the <strong>&quot;AIP Bootcamp,&quot;</strong> intensive, five-day, hands-on workshops where prospective clients brought their own live data and Palantir&#39;s engineers built working AI workflows on the spot.<sup><a id="footnote-ref-19-2" href="#footnote-19" data-footnote-ref aria-describedby="footnote-label">26</a></sup> Instead of maintaining the traditional sales motion of polished decks and long pilots, Palantir accepted the higher upfront cost of deploying FDEs directly into client environments for a matter of days.</p>
+<p>The logic was pragmatic: in a market saturated with AI hype and vaporware, executives were skeptical of theoretical promises, and the bootcamps forced a visceral, immediate proof of value using the client&#39;s own data. The results have been strong. Reported bootcamp <strong>conversion rates have run around 70-75%</strong> in recent quarters,<sup><a id="footnote-ref-70" href="#footnote-70" data-footnote-ref aria-describedby="footnote-label">27</a></sup> and <strong>U.S. commercial revenue growth accelerated sharply across 2024-2025</strong>, from <strong>44% year-over-year in Q3 2024</strong><sup><a id="footnote-ref-71" href="#footnote-71" data-footnote-ref aria-describedby="footnote-label">28</a></sup> to <strong>121% in Q3 2025</strong><sup><a id="footnote-ref-72" href="#footnote-72" data-footnote-ref aria-describedby="footnote-label">29</a></sup> and as high as <strong>137% in Q4 2025</strong>.<sup><a id="footnote-ref-68" href="#footnote-68" data-footnote-ref aria-describedby="footnote-label">30</a></sup> Deal activity scaled alongside it: Palantir closed roughly 204 deals over $1 million in Q3 2025 alone, a fourfold increase in that volume compared with late 2022.<sup><a id="footnote-ref-72-2" href="#footnote-72" data-footnote-ref aria-describedby="footnote-label">29</a></sup> This growth, paired with expanding margins, helped Palantir achieve consecutive quarters of GAAP profitability and secure inclusion in the <strong>S&amp;P 500</strong> in September 2024.<sup><a id="footnote-ref-2-3" href="#footnote-2" data-footnote-ref aria-describedby="footnote-label">3</a></sup></p>
+<h2>9. Comprehensive Chronological Timeline</h2>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th>Date</th>
+<th>Event</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>2003</strong></td>
+<td>May</td>
+<td>Corporate Incorporation</td>
+<td>Palantir incorporated in Delaware by Thiel, Lonsdale, Cohen, Gettings, and Karp.<sup><a id="footnote-ref-1-9" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup></td>
+</tr>
+<tr>
+<td><strong>2004</strong></td>
+<td>n/a</td>
+<td>Early Prototyping</td>
+<td>Thiel bankrolls the prototype with ~$30M; Karp becomes CEO.<sup><a id="footnote-ref-1-10" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup></td>
+</tr>
+<tr>
+<td><strong>2005</strong></td>
+<td>n/a</td>
+<td>In-Q-Tel Investment</td>
+<td>CIA&#39;s venture arm invests ~$2M, anchoring the intelligence-community relationship.<sup><a id="footnote-ref-3" href="#footnote-3" data-footnote-ref aria-describedby="footnote-label">31</a></sup></td>
+</tr>
+<tr>
+<td><strong>2006</strong></td>
+<td>Jun &amp; Nov</td>
+<td>Series A &amp; B Funding</td>
+<td>Oakhouse Partners leads a $7.5M Series A; REV leads a $10.5M Series B.<sup><a id="footnote-ref-9-12" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></td>
+</tr>
+<tr>
+<td><strong>2008</strong></td>
+<td>n/a</td>
+<td>Gotham Launched</td>
+<td>First major platform released for defense/intelligence analysis.<sup><a id="footnote-ref-20-3" href="#footnote-20" data-footnote-ref aria-describedby="footnote-label">8</a></sup></td>
+</tr>
+<tr>
+<td><strong>2010</strong></td>
+<td>April</td>
+<td>Metropolis (QA Studio)</td>
+<td>Partners with Thomson Reuters on a finance-focused analytics platform.<sup><a id="footnote-ref-9-13" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></td>
+</tr>
+<tr>
+<td><strong>2010</strong></td>
+<td>August</td>
+<td>i2 Lawsuit Filed</td>
+<td>i2 sues Palantir for fraud and IP theft, alleging use of a shell company.<sup><a id="footnote-ref-24-4" href="#footnote-24" data-footnote-ref aria-describedby="footnote-label">10</a></sup></td>
+</tr>
+<tr>
+<td><strong>2011</strong></td>
+<td>February</td>
+<td>i2 Lawsuit Settled</td>
+<td>Case resolved out of court; terms undisclosed, though ~$10M is widely (unofficially) cited.<sup><a id="footnote-ref-9-14" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></td>
+</tr>
+<tr>
+<td><strong>2013</strong></td>
+<td>n/a</td>
+<td>IPO Delay Announced</td>
+<td>Karp says the company will not pursue an IPO to protect its culture.<sup><a id="footnote-ref-9-15" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></td>
+</tr>
+<tr>
+<td><strong>2015</strong></td>
+<td>n/a</td>
+<td>$20B Valuation Reached</td>
+<td>Massive private raise pushes valuation to $20 billion.<sup><a id="footnote-ref-10-5" href="#footnote-10" data-footnote-ref aria-describedby="footnote-label">18</a></sup></td>
+</tr>
+<tr>
+<td><strong>2016</strong></td>
+<td>n/a</td>
+<td>Foundry Launched</td>
+<td>Commercial-focused Foundry replaces the unscalable Metropolis.<sup><a id="footnote-ref-20-4" href="#footnote-20" data-footnote-ref aria-describedby="footnote-label">8</a></sup></td>
+</tr>
+<tr>
+<td><strong>2016</strong></td>
+<td>Feb / Sept</td>
+<td>Strategic Acquisitions</td>
+<td>Acquires Kimono Labs (web scraping) and Silk (data visualization).<sup><a id="footnote-ref-9-16" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></td>
+</tr>
+<tr>
+<td><strong>2016</strong></td>
+<td>Jun-Oct</td>
+<td>FASA Lawsuit</td>
+<td>Sues the U.S. Army over DCGS-A2; wins a permanent injunction.<sup><a id="footnote-ref-28-4" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">13</a></sup></td>
+</tr>
+<tr>
+<td><strong>2016</strong></td>
+<td>September</td>
+<td>Abramowitz Litigation</td>
+<td>Sues early investor Marc Abramowitz for patent theft; he counter-sues for records.<sup><a id="footnote-ref-47-4" href="#footnote-47" data-footnote-ref aria-describedby="footnote-label">22</a></sup></td>
+</tr>
+<tr>
+<td><strong>2017</strong></td>
+<td>n/a</td>
+<td>Airbus Skywise Launched</td>
+<td>Partners with Airbus; later extends to 100+ airlines.<sup><a id="footnote-ref-21-5" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">20</a></sup></td>
+</tr>
+<tr>
+<td><strong>2019</strong></td>
+<td>March</td>
+<td>DCGS-A2 Contract Win</td>
+<td>Army awards the $876M, 10-year contract <em>jointly</em> to Palantir and Raytheon; Palantir wins the first task order.<sup><a id="footnote-ref-32-2" href="#footnote-32" data-footnote-ref aria-describedby="footnote-label">16</a></sup></td>
+</tr>
+<tr>
+<td><strong>2020</strong></td>
+<td>September 30</td>
+<td>Direct Listing on NYSE</td>
+<td>Lists as PLTR via direct listing, using the Class F voting structure.<sup><a id="footnote-ref-21-6" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">20</a></sup></td>
+</tr>
+<tr>
+<td><strong>2023</strong></td>
+<td>April</td>
+<td>AIP Launched</td>
+<td>Launches its Artificial Intelligence Platform to orchestrate LLMs securely.<sup><a id="footnote-ref-9-17" href="#footnote-9" data-footnote-ref aria-describedby="footnote-label">6</a></sup></td>
+</tr>
+<tr>
+<td><strong>2023</strong></td>
+<td>H2</td>
+<td>AIP Bootcamps Deployed</td>
+<td>Five-day, hands-on workshops begin compressing enterprise sales cycles.<sup><a id="footnote-ref-19-3" href="#footnote-19" data-footnote-ref aria-describedby="footnote-label">26</a></sup></td>
+</tr>
+<tr>
+<td><strong>2024</strong></td>
+<td>September</td>
+<td>S&amp;P 500 Inclusion</td>
+<td>Added to the index after sustained GAAP profitability and commercial growth.<sup><a id="footnote-ref-2-4" href="#footnote-2" data-footnote-ref aria-describedby="footnote-label">3</a></sup></td>
+</tr>
+</tbody></table>
+<h2>10. Closing Summary</h2>
+<p>Palantir&#39;s history is unusual less for any single decision than for the pattern across two decades: a company willing to make legally aggressive, financially costly, or reputationally risky bets when it judged the standard path to be structurally rigged against it, reverse-engineering a competitor&#39;s software to break its data lock-in, suing the U.S. Army it hoped to sell to, and locking in founder control through an unusual share class before ever taking outside money at scale. Its core technical bet, that human judgment augmented by software beats software trying to replace human judgment outright, shaped both its early counter-terrorism work and its more recent AI platform, which grounds language models inside a client&#39;s existing data and permissions rather than letting them operate unsupervised.</p>
+<p>None of this makes Palantir&#39;s trajectory a template that transfers cleanly elsewhere. Much of it depended on specific, hard-to-repeat conditions: a founder willing to self-fund for years, a government customer willing to be sued by its own vendor, and a regulatory environment (FASA) that happened to exist and happened to apply. What the history does show clearly is a company that treated legal, governance, and procurement mechanics as seriously as it treated its own product, and was willing to spend years and real money defending unconventional positions on all three fronts.</p>
+<h3>Works Cited</h3>
+<section class="footnotes" data-footnotes>
+<h2 id="footnote-label" class="sr-only">Footnotes</h2>
+<ol>
+<li id="footnote-1">
+<p>The History of Palantir Technologies: From Visionary Beginnings to a Global Data Powerhouse. Markets &amp; Stocks. <a href="http://markets.chroniclejournal.com/chroniclejournal/article/marketminute-2025-3-21-the-history-of-palantir-technologies-from-visionary-beginnings-to-a-global-data-powerhouse">http://markets.chroniclejournal.com/chroniclejournal/article/marketminute-2025-3-21-the-history-of-palantir-technologies-from-visionary-beginnings-to-a-global-data-powerhouse</a> <a href="#footnote-ref-1" data-footnote-backref aria-label="Back to reference 1">↩</a> <a href="#footnote-ref-1-2" data-footnote-backref aria-label="Back to reference 1">↩<sup>2</sup></a> <a href="#footnote-ref-1-3" data-footnote-backref aria-label="Back to reference 1">↩<sup>3</sup></a> <a href="#footnote-ref-1-4" data-footnote-backref aria-label="Back to reference 1">↩<sup>4</sup></a> <a href="#footnote-ref-1-5" data-footnote-backref aria-label="Back to reference 1">↩<sup>5</sup></a> <a href="#footnote-ref-1-6" data-footnote-backref aria-label="Back to reference 1">↩<sup>6</sup></a> <a href="#footnote-ref-1-7" data-footnote-backref aria-label="Back to reference 1">↩<sup>7</sup></a> <a href="#footnote-ref-1-8" data-footnote-backref aria-label="Back to reference 1">↩<sup>8</sup></a> <a href="#footnote-ref-1-9" data-footnote-backref aria-label="Back to reference 1">↩<sup>9</sup></a> <a href="#footnote-ref-1-10" data-footnote-backref aria-label="Back to reference 1">↩<sup>10</sup></a></p>
+</li>
+<li id="footnote-4">
+<p>US9589014B2, Creating data in a data store using a dynamic ontology. Google Patents. <a href="https://patents.google.com/patent/US9589014B2/en">https://patents.google.com/patent/US9589014B2/en</a> <a href="#footnote-ref-4" data-footnote-backref aria-label="Back to reference 4">↩</a></p>
+</li>
+<li id="footnote-2">
+<p>What is Palantir Technologies Inc. (PLTR) stock, business overview &amp; development history. Bitget. <a href="https://www.bitget.com/stock/nasdaq-pltr/what-is">https://www.bitget.com/stock/nasdaq-pltr/what-is</a> <a href="#footnote-ref-2" data-footnote-backref aria-label="Back to reference 2">↩</a> <a href="#footnote-ref-2-2" data-footnote-backref aria-label="Back to reference 2">↩<sup>2</sup></a> <a href="#footnote-ref-2-3" data-footnote-backref aria-label="Back to reference 2">↩<sup>3</sup></a> <a href="#footnote-ref-2-4" data-footnote-backref aria-label="Back to reference 2">↩<sup>4</sup></a></p>
+</li>
+<li id="footnote-6">
+<p>Government Contract Case Study #1: Peter Thiel. Scharf Inspections. <a href="https://sacinspect.com/government-contract-case-study-1-peter-thiel/">https://sacinspect.com/government-contract-case-study-1-peter-thiel/</a> <a href="#footnote-ref-6" data-footnote-backref aria-label="Back to reference 6">↩</a></p>
+</li>
+<li id="footnote-12">
+<p>The seer and the seen: Surveying Palantir&#39;s surveillance platform. Taylor &amp; Francis. <a href="https://www.tandfonline.com/doi/full/10.1080/01972243.2022.2100851">https://www.tandfonline.com/doi/full/10.1080/01972243.2022.2100851</a> <a href="#footnote-ref-12" data-footnote-backref aria-label="Back to reference 12">↩</a> <a href="#footnote-ref-12-2" data-footnote-backref aria-label="Back to reference 12">↩<sup>2</sup></a></p>
+</li>
+<li id="footnote-9">
+<p>Palantir. Wikipedia. <a href="https://en.wikipedia.org/wiki/Palantir">https://en.wikipedia.org/wiki/Palantir</a> <a href="#footnote-ref-9" data-footnote-backref aria-label="Back to reference 9">↩</a> <a href="#footnote-ref-9-2" data-footnote-backref aria-label="Back to reference 9">↩<sup>2</sup></a> <a href="#footnote-ref-9-3" data-footnote-backref aria-label="Back to reference 9">↩<sup>3</sup></a> <a href="#footnote-ref-9-4" data-footnote-backref aria-label="Back to reference 9">↩<sup>4</sup></a> <a href="#footnote-ref-9-5" data-footnote-backref aria-label="Back to reference 9">↩<sup>5</sup></a> <a href="#footnote-ref-9-6" data-footnote-backref aria-label="Back to reference 9">↩<sup>6</sup></a> <a href="#footnote-ref-9-7" data-footnote-backref aria-label="Back to reference 9">↩<sup>7</sup></a> <a href="#footnote-ref-9-8" data-footnote-backref aria-label="Back to reference 9">↩<sup>8</sup></a> <a href="#footnote-ref-9-9" data-footnote-backref aria-label="Back to reference 9">↩<sup>9</sup></a> <a href="#footnote-ref-9-10" data-footnote-backref aria-label="Back to reference 9">↩<sup>10</sup></a> <a href="#footnote-ref-9-11" data-footnote-backref aria-label="Back to reference 9">↩<sup>11</sup></a> <a href="#footnote-ref-9-12" data-footnote-backref aria-label="Back to reference 9">↩<sup>12</sup></a> <a href="#footnote-ref-9-13" data-footnote-backref aria-label="Back to reference 9">↩<sup>13</sup></a> <a href="#footnote-ref-9-14" data-footnote-backref aria-label="Back to reference 9">↩<sup>14</sup></a> <a href="#footnote-ref-9-15" data-footnote-backref aria-label="Back to reference 9">↩<sup>15</sup></a> <a href="#footnote-ref-9-16" data-footnote-backref aria-label="Back to reference 9">↩<sup>16</sup></a> <a href="#footnote-ref-9-17" data-footnote-backref aria-label="Back to reference 9">↩<sup>17</sup></a></p>
+</li>
+<li id="footnote-13">
+<p>Palantir Strategy and Business Model. Umbrex Consulting. <a href="https://umbrex.com/resources/company-profiles/palantir/">https://umbrex.com/resources/company-profiles/palantir/</a> <a href="#footnote-ref-13" data-footnote-backref aria-label="Back to reference 13">↩</a> <a href="#footnote-ref-13-2" data-footnote-backref aria-label="Back to reference 13">↩<sup>2</sup></a> <a href="#footnote-ref-13-3" data-footnote-backref aria-label="Back to reference 13">↩<sup>3</sup></a></p>
+</li>
+<li id="footnote-20">
+<p>Palantir, Big Data Analytics, Cybersecurity, &amp; AI. Britannica Money. <a href="https://www.britannica.com/money/Palantir-Technologies-Inc">https://www.britannica.com/money/Palantir-Technologies-Inc</a> <a href="#footnote-ref-20" data-footnote-backref aria-label="Back to reference 20">↩</a> <a href="#footnote-ref-20-2" data-footnote-backref aria-label="Back to reference 20">↩<sup>2</sup></a> <a href="#footnote-ref-20-3" data-footnote-backref aria-label="Back to reference 20">↩<sup>3</sup></a> <a href="#footnote-ref-20-4" data-footnote-backref aria-label="Back to reference 20">↩<sup>4</sup></a></p>
+</li>
+<li id="footnote-22">
+<p>i2 Group. Wikipedia. <a href="https://en.wikipedia.org/wiki/I2_Group">https://en.wikipedia.org/wiki/I2_Group</a> <a href="#footnote-ref-22" data-footnote-backref aria-label="Back to reference 22">↩</a></p>
+</li>
+<li id="footnote-24">
+<p>i2 v. Palantir (complaint). Scribd. <a href="https://www.scribd.com/doc/36371667/i2-v-palantir-080910">https://www.scribd.com/doc/36371667/i2-v-palantir-080910</a> <a href="#footnote-ref-24" data-footnote-backref aria-label="Back to reference 24">↩</a> <a href="#footnote-ref-24-2" data-footnote-backref aria-label="Back to reference 24">↩<sup>2</sup></a> <a href="#footnote-ref-24-3" data-footnote-backref aria-label="Back to reference 24">↩<sup>3</sup></a> <a href="#footnote-ref-24-4" data-footnote-backref aria-label="Back to reference 24">↩<sup>4</sup></a></p>
+</li>
+<li id="footnote-25">
+<p>Palantir, I2 Settle Trade Secrets, Copyright Case. Law360. <a href="https://www.law360.com/articles/225544/palantir-i2-settle-trade-secrets-copyright-case">https://www.law360.com/articles/225544/palantir-i2-settle-trade-secrets-copyright-case</a> <a href="#footnote-ref-25" data-footnote-backref aria-label="Back to reference 25">↩</a></p>
+</li>
+<li id="footnote-18">
+<p>Two Security Companies Settle, and Agree to Stop Discussing Their Dirty Laundry: Palantir and I2. Green Data Center Blog. <a href="https://www.greenm3.com/gdcblog/2011/2/20/two-security-companies-settle-and-agree-to-stop-discussing-t.html">https://www.greenm3.com/gdcblog/2011/2/20/two-security-companies-settle-and-agree-to-stop-discussing-t.html</a> <a href="#footnote-ref-18" data-footnote-backref aria-label="Back to reference 18">↩</a></p>
+</li>
+<li id="footnote-28">
+<p>Palantir USG, Inc. v. United States. Justia Law. <a href="https://law.justia.com/cases/federal/district-courts/federal-claims/cofce/1:2016cv00784/32952/113/">https://law.justia.com/cases/federal/district-courts/federal-claims/cofce/1:2016cv00784/32952/113/</a> <a href="#footnote-ref-28" data-footnote-backref aria-label="Back to reference 28">↩</a> <a href="#footnote-ref-28-2" data-footnote-backref aria-label="Back to reference 28">↩<sup>2</sup></a> <a href="#footnote-ref-28-3" data-footnote-backref aria-label="Back to reference 28">↩<sup>3</sup></a> <a href="#footnote-ref-28-4" data-footnote-backref aria-label="Back to reference 28">↩<sup>4</sup></a></p>
+</li>
+<li id="footnote-29">
+<p>Commercializing the Federal Government. The Flaw. <a href="https://theflaw.org/articles/commercializing-the-federal-government/">https://theflaw.org/articles/commercializing-the-federal-government/</a> <a href="#footnote-ref-29" data-footnote-backref aria-label="Back to reference 29">↩</a></p>
+</li>
+<li id="footnote-30">
+<p>Federal Circuit Cites FASA in Palantir USG v. United States. National Law Review. <a href="https://natlawreview.com/article/federal-circuit-charts-new-terrain-commercial-item-contracting">https://natlawreview.com/article/federal-circuit-charts-new-terrain-commercial-item-contracting</a> <a href="#footnote-ref-30" data-footnote-backref aria-label="Back to reference 30">↩</a> <a href="#footnote-ref-30-2" data-footnote-backref aria-label="Back to reference 30">↩<sup>2</sup></a></p>
+</li>
+<li id="footnote-32">
+<p>Palantir, who successfully sued the Army, has won a major Army contract. Defense News. <a href="https://www.defensenews.com/land/2019/03/29/palantir-who-successfully-sued-the-army-just-won-a-major-army-contract/">https://www.defensenews.com/land/2019/03/29/palantir-who-successfully-sued-the-army-just-won-a-major-army-contract/</a> <a href="#footnote-ref-32" data-footnote-backref aria-label="Back to reference 32">↩</a> <a href="#footnote-ref-32-2" data-footnote-backref aria-label="Back to reference 32">↩<sup>2</sup></a></p>
+</li>
+<li id="footnote-36">
+<p>Palantir: Redefining Analytics, Augmenting Intelligence &amp; Unlocking Secrets. <a href="https://www.bobinsun.cn/assets/pdf/Palantir-Redefining-Analytics,%20Augmenting-Intelligence%20&%20Unlocking-Secrets.pdf">https://www.bobinsun.cn/assets/pdf/Palantir-Redefining-Analytics,%20Augmenting-Intelligence%20&amp;%20Unlocking-Secrets.pdf</a> <a href="#footnote-ref-36" data-footnote-backref aria-label="Back to reference 36">↩</a></p>
+</li>
+<li id="footnote-10">
+<p>Palantir&#39;s Growth Story: How the Magic of Data Analysis Is Changing the World. Medium. <a href="https://medium.com/@takafumi.endo/palantirs-growth-story-how-the-magic-of-data-analysis-is-changing-the-world-05fe98f4c2af">https://medium.com/@takafumi.endo/palantirs-growth-story-how-the-magic-of-data-analysis-is-changing-the-world-05fe98f4c2af</a> <a href="#footnote-ref-10" data-footnote-backref aria-label="Back to reference 10">↩</a> <a href="#footnote-ref-10-2" data-footnote-backref aria-label="Back to reference 10">↩<sup>2</sup></a> <a href="#footnote-ref-10-3" data-footnote-backref aria-label="Back to reference 10">↩<sup>3</sup></a> <a href="#footnote-ref-10-4" data-footnote-backref aria-label="Back to reference 10">↩<sup>4</sup></a> <a href="#footnote-ref-10-5" data-footnote-backref aria-label="Back to reference 10">↩<sup>5</sup></a></p>
+</li>
+<li id="footnote-40">
+<p>Palantir &amp; Airbus Partnership Overview. Palantir. <a href="https://www.palantir.com/assets/xrfr7uokpv1b/7uEHPTEM0MkKtBFcx2zh63/9d75da5b76439717ac95135b5012479e/Palantir-Airbus-Partnership_Overview.pdf">https://www.palantir.com/assets/xrfr7uokpv1b/7uEHPTEM0MkKtBFcx2zh63/9d75da5b76439717ac95135b5012479e/Palantir-Airbus-Partnership_Overview.pdf</a> <a href="#footnote-ref-40" data-footnote-backref aria-label="Back to reference 40">↩</a> <a href="#footnote-ref-40-2" data-footnote-backref aria-label="Back to reference 40">↩<sup>2</sup></a> <a href="#footnote-ref-40-3" data-footnote-backref aria-label="Back to reference 40">↩<sup>3</sup></a></p>
+</li>
+<li id="footnote-21">
+<p>S-1/A. SEC.gov. <a href="https://www.sec.gov/Archives/edgar/data/1321655/000119312520250103/d904406ds1a.htm">https://www.sec.gov/Archives/edgar/data/1321655/000119312520250103/d904406ds1a.htm</a> <a href="#footnote-ref-21" data-footnote-backref aria-label="Back to reference 21">↩</a> <a href="#footnote-ref-21-2" data-footnote-backref aria-label="Back to reference 21">↩<sup>2</sup></a> <a href="#footnote-ref-21-3" data-footnote-backref aria-label="Back to reference 21">↩<sup>3</sup></a> <a href="#footnote-ref-21-4" data-footnote-backref aria-label="Back to reference 21">↩<sup>4</sup></a> <a href="#footnote-ref-21-5" data-footnote-backref aria-label="Back to reference 21">↩<sup>5</sup></a> <a href="#footnote-ref-21-6" data-footnote-backref aria-label="Back to reference 21">↩<sup>6</sup></a></p>
+</li>
+<li id="footnote-45">
+<p>S-1/A. SEC.gov. <a href="https://www.sec.gov/Archives/edgar/data/1814215/000110465920098850/tm2022659-7_s1a.htm">https://www.sec.gov/Archives/edgar/data/1814215/000110465920098850/tm2022659-7_s1a.htm</a> <a href="#footnote-ref-45" data-footnote-backref aria-label="Back to reference 45">↩</a></p>
+</li>
+<li id="footnote-47">
+<p>KT4 Partners LLC v. Palantir Technologies, Inc. Delaware Court of Chancery. <a href="https://courts.delaware.gov/Opinions/Download.aspx?id=269300">https://courts.delaware.gov/Opinions/Download.aspx?id=269300</a> <a href="#footnote-ref-47" data-footnote-backref aria-label="Back to reference 47">↩</a> <a href="#footnote-ref-47-2" data-footnote-backref aria-label="Back to reference 47">↩<sup>2</sup></a> <a href="#footnote-ref-47-3" data-footnote-backref aria-label="Back to reference 47">↩<sup>3</sup></a> <a href="#footnote-ref-47-4" data-footnote-backref aria-label="Back to reference 47">↩<sup>4</sup></a></p>
+</li>
+<li id="footnote-49">
+<p>Palantir Files Nasty Lawsuit Claiming Early Investor Stole Its Ideas. Gizmodo. <a href="https://gizmodo.com/palantir-files-nasty-lawsuit-claiming-early-investor-st-1786269832">https://gizmodo.com/palantir-files-nasty-lawsuit-claiming-early-investor-st-1786269832</a> <a href="#footnote-ref-49" data-footnote-backref aria-label="Back to reference 49">↩</a></p>
+</li>
+<li id="footnote-48">
+<p>Palantir Sues Marc Abramowitz for Theft. Scribd. <a href="https://www.scribd.com/document/323155124/Palantir-Lawsuit">https://www.scribd.com/document/323155124/Palantir-Lawsuit</a> <a href="#footnote-ref-48" data-footnote-backref aria-label="Back to reference 48">↩</a></p>
+</li>
+<li id="footnote-17">
+<p>In-Q-Tel, Under the Microscope. Obsidian Publish. <a href="https://publish.obsidian.md/findingtruth/Modern+Companies/Big+Tech+%26+Data+Companies/In-Q-Tel">https://publish.obsidian.md/findingtruth/Modern+Companies/Big+Tech+%26+Data+Companies/In-Q-Tel</a> <a href="#footnote-ref-17" data-footnote-backref aria-label="Back to reference 17">↩</a></p>
+</li>
+<li id="footnote-19">
+<p>Palantir Technologies: Company Spotlight. MLQ.ai Research. <a href="https://mlq.ai/research/palantir-operational-ai-platform/">https://mlq.ai/research/palantir-operational-ai-platform/</a> <a href="#footnote-ref-19" data-footnote-backref aria-label="Back to reference 19">↩</a> <a href="#footnote-ref-19-2" data-footnote-backref aria-label="Back to reference 19">↩<sup>2</sup></a> <a href="#footnote-ref-19-3" data-footnote-backref aria-label="Back to reference 19">↩<sup>3</sup></a></p>
+</li>
+<li id="footnote-70">
+<p>Palantir Bootcamps Propel Defense AI Platforms Adoption. AI CERTs News. <a href="https://www.aicerts.ai/news/palantir-bootcamps-propel-defense-ai-platforms-adoption/">https://www.aicerts.ai/news/palantir-bootcamps-propel-defense-ai-platforms-adoption/</a> <a href="#footnote-ref-70" data-footnote-backref aria-label="Back to reference 70">↩</a></p>
+</li>
+<li id="footnote-71">
+<p>Palantir Technologies Inc., Form 8-K, Q3 2024. SEC.gov. <a href="https://www.sec.gov/Archives/edgar/data/0001321655/000132165524000207/a2024q3ex991earningsrelease.htm">https://www.sec.gov/Archives/edgar/data/0001321655/000132165524000207/a2024q3ex991earningsrelease.htm</a> <a href="#footnote-ref-71" data-footnote-backref aria-label="Back to reference 71">↩</a></p>
+</li>
+<li id="footnote-72">
+<p>Palantir Faces a Valuation Stress Test After a 150% Run Fueled by AI Optimism. Investing.com. <a href="https://www.investing.com/analysis/palantir-faces-a-valuation-stress-test-after-a-150-run-fueled-by-ai-optimism-200672531">https://www.investing.com/analysis/palantir-faces-a-valuation-stress-test-after-a-150-run-fueled-by-ai-optimism-200672531</a> <a href="#footnote-ref-72" data-footnote-backref aria-label="Back to reference 72">↩</a> <a href="#footnote-ref-72-2" data-footnote-backref aria-label="Back to reference 72">↩<sup>2</sup></a></p>
+</li>
+<li id="footnote-68">
+<p>Palantir (PLTR) Stock in 2026: AI Growth, Government Contracts, Key Risks, and How to Trade. Phemex Academy. <a href="https://phemex.com/academy/palantir-pltr-stock-2026">https://phemex.com/academy/palantir-pltr-stock-2026</a> <a href="#footnote-ref-68" data-footnote-backref aria-label="Back to reference 68">↩</a></p>
+</li>
+<li id="footnote-3">
+<p>In-Q-Tel. Grokipedia. <a href="https://grokipedia.com/page/In-Q-Tel">https://grokipedia.com/page/In-Q-Tel</a> <a href="#footnote-ref-3" data-footnote-backref aria-label="Back to reference 3">↩</a></p>
+</li>
+</ol>
+</section>
+</article></section></main>
+    <footer class="site-footer"><div class="wrap"></div></footer>
+  </body>
+</html>

@@ -3,6 +3,9 @@ import path from 'node:path';
 import { execSync } from 'node:child_process';
 import matter from 'gray-matter';
 import { marked } from 'marked';
+import markedFootnote from 'marked-footnote';
+
+marked.use(markedFootnote());
 
 const root = process.cwd();
 const blogDir = path.join(root, 'blogs');
