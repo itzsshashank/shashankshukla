@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Understanding Palantir&#39;s Architecture — Shashank Shukla</title>
+    <meta name="description" content="A companion to the Palantir history: how the company&#39;s software is actually built, from the Ontology and its data backend to access control, deployment, and AI." />
+    <link rel="canonical" href="https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantirs-architecture/" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantirs-architecture/" />
+    <meta property="og:title" content="Understanding Palantir&#39;s Architecture — Shashank Shukla" />
+    <meta property="og:description" content="A companion to the Palantir history: how the company&#39;s software is actually built, from the Ontology and its data backend to access control, deployment, and AI." />
+    <meta property="og:site_name" content="Shashank Shukla" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantirs-architecture/" />
+    <meta name="twitter:title" content="Understanding Palantir&#39;s Architecture — Shashank Shukla" />
+    <meta name="twitter:description" content="A companion to the Palantir history: how the company&#39;s software is actually built, from the Ontology and its data backend to access control, deployment, and AI." />
+    
+    <link rel="stylesheet" href="/shashankshukla/site.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantirs-architecture/"
+        },
+        "headline": "Understanding Palantir's Architecture",
+        "description": "A companion to the Palantir history: how the company's software is actually built, from the Ontology and its data backend to access control, deployment, and AI.",
+        "datePublished": "2026-07-18T18:26:57.669Z",
+        "dateModified": "2026-07-18T18:26:57.669Z",
+        "author": {
+          "@type": "Person",
+          "name": "Shashank Shukla",
+          "url": "https://itzsshashank.github.io/shashankshukla/"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Shashank Shukla",
+          "url": "https://itzsshashank.github.io/shashankshukla/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header"><div class="wrap bar"><a class="brand" href="/shashankshukla/">Shashank Shukla</a><nav class="nav"><a href="/shashankshukla/">Home</a><a href="/shashankshukla/projects/">Projects</a><a href="/shashankshukla/blogs/">All Posts</a><a href="https://github.com/itzsshashank" target="_blank" rel="noopener noreferrer" aria-label="GitHub" style="padding: 0.5rem;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></nav></div></header>
+    <main><section class="hero"><div class="wrap hero-grid"><h1>Understanding Palantir&#39;s Architecture</h1><p class="meta">Jul 18, 2026, 11:56 PM</p></div></section><section class="wrap"><article class="post prose card">
+<p>New to Palantir? My earlier piece, <a href="https://itzsshashank.github.io/shashankshukla/blogs/understanding-palantir/">Understanding Palantir</a>, covers the company&#39;s history, strategy, and legal fights. This one picks up from there to look at how the platform itself is actually built.</p>
+<p>The Palantir software ecosystem represents a significant departure from traditional enterprise software architectures. Historically split into distinct platforms, Gotham for defense intelligence and Foundry for commercial operations, the ecosystem has converged into a unified, modular architecture that Palantir itself now refers to as an Enterprise Operating System.<sup><a id="footnote-ref-1" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup> Unlike traditional data stacks that rely on a disjointed combination of data lakes, catalogs, and business intelligence dashboards, Palantir&#39;s architecture collapses data integration, semantic modeling, security, and application deployment into a tightly coupled, globally governed state machine.</p>
+<p>This report is a technical breakdown of Palantir&#39;s platform design, drawn from public documentation, engineering discourse, patent filings, and open-source repositories. It covers the Ontology system, the evolution of the data backend from Object Storage V1 (Phonograph) to Object Storage V2 (OSv2), the Purpose-Based Access Control (PBAC) security model, the Apollo continuous delivery engine, and the Artificial Intelligence Platform (AIP), along with the boundary between the platform&#39;s proprietary core and its open-source components.</p>
+<hr>
+<h2>1. The Genesis of the Architecture: Intelligence Augmentation</h2>
+<p>To understand the technical design of Palantir&#39;s platforms, it helps to trace the company&#39;s origins to the early 2000s. Emerging from the &quot;PayPal Mafia,&quot; founders Peter Thiel, Alex Karp, Stephen Cohen, Joe Lonsdale, and Nathan Gettings sought to apply fraud-detection methodologies developed at PayPal to national security challenges after the September 11 attacks.<sup><a id="footnote-ref-2" href="#footnote-2" data-footnote-ref aria-describedby="footnote-label">2</a></sup> At PayPal, engineers had found that purely algorithmic fraud detection was insufficient against adaptive adversaries, which led to &quot;Igor,&quot; a hybrid system that used algorithms to flag suspicious activity for human review.<sup><a id="footnote-ref-6" href="#footnote-6" data-footnote-ref aria-describedby="footnote-label">3</a></sup></p>
+<p>This &quot;intelligence augmentation&quot; philosophy, using computation to assist human analysts rather than replace them, became Palantir&#39;s foundational design principle.<sup><a id="footnote-ref-6-2" href="#footnote-6" data-footnote-ref aria-describedby="footnote-label">3</a></sup> Backed by early funding from In-Q-Tel, the CIA&#39;s venture arm, Palantir built Gotham (originally Palantir Government) to process fragmented, highly classified intelligence data.<sup><a id="footnote-ref-42" href="#footnote-42" data-footnote-ref aria-describedby="footnote-label">4</a></sup> The operational realities of these early deployments, adversarial environments, air-gapped networks, and strict data governance requirements, pushed the architecture toward prioritizing security propagation and semantic data fusion over simple data storage.<sup><a id="footnote-ref-21" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">5</a></sup></p>
+<p>As the company expanded commercially with Palantir Metropolis (finance-focused, later phased out) and Palantir Foundry (launched 2016), it ran into a related but distinct problem.<sup><a id="footnote-ref-12" href="#footnote-12" data-footnote-ref aria-describedby="footnote-label">6</a></sup> Large enterprises like Airbus had data spread across systems that didn&#39;t share a common definition of anything: producing the A350 required synchronizing data across millions of parts, hundreds of teams, and multiple disparate ERP and supply chain systems.<sup><a id="footnote-ref-14" href="#footnote-14" data-footnote-ref aria-describedby="footnote-label">7</a></sup> The engineering problem was no longer just analyzing data, it was building a unified operational model that could coordinate real-world actions across all of it. That&#39;s what led to the Ontology system.</p>
+<hr>
+<h2>2. The Ontology System: Semantic Modeling and Kinetic Execution</h2>
+<p>The Ontology is the central layer of the platform. It sits above raw digital assets (datasets, virtual tables, models) and maps them to their real-world counterparts.<sup><a id="footnote-ref-16" href="#footnote-16" data-footnote-ref aria-describedby="footnote-label">8</a></sup></p>
+<h3>2.1 The Object-Link-Action Model</h3>
+<p>The Ontology&#39;s design departs from traditional relational schemas and tabular representations in favor of five core primitives:</p>
+<ul>
+<li><strong>Object Types</strong>: Schema definitions for real-world entities or events, such as an <em>Employee</em>, <em>Aircraft</em>, or <em>Purchase Order</em>.<sup><a id="footnote-ref-16-2" href="#footnote-16" data-footnote-ref aria-describedby="footnote-label">8</a></sup> An object instance corresponds to a single real-world entity; an object set is a filtered collection of instances.<sup><a id="footnote-ref-17" href="#footnote-17" data-footnote-ref aria-describedby="footnote-label">9</a></sup></li>
+<li><strong>Link Types</strong>: Schema-level relationships between two Object Types, for example an <em>Employee</em> linked to a <em>Company</em> via an <code>Employee -&gt; Employer</code> link.<sup><a id="footnote-ref-16-3" href="#footnote-16" data-footnote-ref aria-describedby="footnote-label">8</a></sup></li>
+<li><strong>Action Types</strong>: Governed transactions that mutate objects, properties, and links simultaneously, encapsulating business logic and triggering downstream side effects such as notifications or webhooks.<sup><a id="footnote-ref-16-4" href="#footnote-16" data-footnote-ref aria-describedby="footnote-label">8</a></sup></li>
+<li><strong>Functions on Objects</strong>: Server-side logic, typically in TypeScript or Python, that runs against the Ontology in a governed environment to read properties, traverse links, and execute complex edits.<sup><a id="footnote-ref-16-5" href="#footnote-16" data-footnote-ref aria-describedby="footnote-label">8</a></sup></li>
+<li><strong>Interfaces</strong>: Definitions that describe the shape and capabilities of an Object Type, enabling polymorphism, so different Object Types that share a common structure can be interacted with consistently.<sup><a id="footnote-ref-16-6" href="#footnote-16" data-footnote-ref aria-describedby="footnote-label">8</a></sup></li>
+</ul>
+<h3>2.2 Architectural Divergence from Standard Paradigms</h3>
+<p>A more conventional approach here would have been a standard enterprise data catalog (like Collibra or Alation) paired with a property graph database (like Neo4j). Palantir&#39;s architecture diverges from that model.<sup><a id="footnote-ref-11" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></p>
+<p>The reason is that traditional data catalogs are read-only metadata repositories: they track where data lives, but don&#39;t support operational workflows. Graph databases, meanwhile, model nodes and edges well, but treat data as purely semantic, pushing business logic, validation, and state mutation off to separate middleware applications. Moving a table from Oracle to a cloud data warehouse doesn&#39;t resolve the deeper problem, that a logistics system and a compliance system may define &quot;Purchase Order&quot; or &quot;Transaction&quot; differently in the first place.<sup><a id="footnote-ref-11-2" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></p>
+<p>By building &quot;kinetic elements&quot; (Actions and Functions) directly into the semantic model, the Ontology functions not just as a database but as a bidirectional write-API for the enterprise.<sup><a id="footnote-ref-18" href="#footnote-18" data-footnote-ref aria-describedby="footnote-label">11</a></sup> When a user updates the status of a supply chain shipment, they don&#39;t run a raw SQL <code>UPDATE</code>, they invoke an Action Type (e.g., <em>Flag Shipment for Delay</em>).<sup><a id="footnote-ref-19" href="#footnote-19" data-footnote-ref aria-describedby="footnote-label">12</a></sup> This means business rules, validation logic, and security constraints are all enforced before the write lands, and the action generates an immutable audit trail of who did what and why.<sup><a id="footnote-ref-20" href="#footnote-20" data-footnote-ref aria-describedby="footnote-label">13</a></sup></p>
+<h3>2.3 Microservice Orchestration within the Ontology</h3>
+<p>A write enters the system through an <strong>Action</strong>, which is validated against the <strong>Ontology Metadata Service (OMS)</strong>, the source of truth for which object, link, and action types are allowed to exist.<sup><a id="footnote-ref-16-7" href="#footnote-16" data-footnote-ref aria-describedby="footnote-label">8</a></sup> Once validated, the edit is picked up by the <strong>Object Data Funnel (&quot;Funnel&quot;)</strong>, the microservice that orchestrates writes, reading from both raw datasources and user-submitted edits and indexing them into the storage layer.<sup><a id="footnote-ref-16-8" href="#footnote-16" data-footnote-ref aria-describedby="footnote-label">8</a></sup> Applications then retrieve Ontology data through the <strong>Object Set Service (OSS)</strong>, the high-throughput read layer responsible for searching, filtering, aggregating, and loading object sets.<sup><a id="footnote-ref-16-9" href="#footnote-16" data-footnote-ref aria-describedby="footnote-label">8</a></sup></p>
+<p>The separation between OMS, Funnel, and OSS is deliberate: applications query OSS rather than raw tables, which means they stay resilient even if the underlying data pipelines are re-architected behind the scenes. It also means state (the objects) and state transitions (the actions that change them) don&#39;t get siloed into unrelated systems, a pattern that, left unaddressed, tends to produce fragmented governance and inconsistent state across an enterprise.</p>
+<hr>
+<h2>3. Data Architecture: Ingestion, Transformation, and the Backend Evolution</h2>
+<p>Mapping operational reality into the Ontology requires a large underlying data-processing engine. Foundry&#39;s data architecture is built to ingest, transform, and serve petabyte-scale data while preserving strict lineage and security propagation.<sup><a id="footnote-ref-14-2" href="#footnote-14" data-footnote-ref aria-describedby="footnote-label">7</a></sup></p>
+<h3>Ingestion and Transformation Mechanics</h3>
+<p>Data enters through Data Connections using standard protocols (JDBC for relational databases, REST for APIs) or native connectors for systems like SAP.<sup><a id="footnote-ref-23" href="#footnote-23" data-footnote-ref aria-describedby="footnote-label">14</a></sup> Palantir treats data engineering as a software development discipline, using tools like Pipeline Builder and Code Repositories.<sup><a id="footnote-ref-25" href="#footnote-25" data-footnote-ref aria-describedby="footnote-label">15</a></sup></p>
+<p>The architecture enforces a strict separation between raw ingestion and business logic.<sup><a id="footnote-ref-23-2" href="#footnote-23" data-footnote-ref aria-describedby="footnote-label">14</a></sup> Raw datasets act as snapshot syncs, an exact replica of the external API or database response, preserving a verifiable audit trail.<sup><a id="footnote-ref-23-3" href="#footnote-23" data-footnote-ref aria-describedby="footnote-label">14</a></sup> Subsequent transformations (deduplication, cleaning, joining) run incrementally, so only new or changed records propagate through the pipeline, which meaningfully reduces compute overhead compared to full batch recalculation.</p>
+<h3>From Phonograph (OSv1) to Object Storage V2 (OSv2)</h3>
+<p>The most significant shift in the platform&#39;s history is the evolution of the object backend. Serving complex queries, multi-hop link traversals (&quot;Search Arounds&quot;) and large aggregations, at sub-second latency required a purpose-built indexing backend.</p>
+<p><strong>Object Storage V1 (&quot;Phonograph&quot;)</strong> was Foundry&#39;s original object database: a durable, horizontally scalable cluster using distributed indices so the query engine could rapidly traverse and prune large datasets.<sup><a id="footnote-ref-27" href="#footnote-27" data-footnote-ref aria-describedby="footnote-label">16</a></sup> It had real limitations, though:</p>
+<ol>
+<li><strong>Tight schema coupling.</strong> Enabling user edits (Actions) required developers to create &quot;writeback datasets,&quot; physical copies of the input schema that stored historical user modifications.<sup><a id="footnote-ref-26" href="#footnote-26" data-footnote-ref aria-describedby="footnote-label">17</a></sup> Because a writeback dataset was tightly coupled to its backing datasource&#39;s schema, any upstream schema change could break the writeback logic.<sup><a id="footnote-ref-29" href="#footnote-29" data-footnote-ref aria-describedby="footnote-label">18</a></sup></li>
+<li><strong>Manual indexing via Render Hints.</strong> Developers had to manually mark properties as <em>Sortable</em>, <em>Searchable</em>, or flag them to add a raw index, and adding a raw index meant Phonograph stored an entirely duplicate column, doubling storage overhead for that property.<sup><a id="footnote-ref-30" href="#footnote-30" data-footnote-ref aria-describedby="footnote-label">19</a></sup></li>
+<li><strong>Compute overhead.</strong> Actions that write back into the Ontology carry an 18 compute-second minimum overhead.<sup><a id="footnote-ref-28" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">20</a></sup> Phonograph also struggled with large Search Around queries, requiring batch updates for snapshot transactions that drove up compute costs at scale.<sup><a id="footnote-ref-27-2" href="#footnote-27" data-footnote-ref aria-describedby="footnote-label">16</a></sup></li>
+</ol>
+<p><strong>Object Storage V2 (OSv2)</strong> re-architects the backend around one core change: decoupling the subsystem responsible for data ingestion (indexing) from the one responsible for querying.<sup><a id="footnote-ref-21-2" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">5</a></sup> Simply scaling out the existing Elasticsearch/Lucene-based clusters behind Phonograph wouldn&#39;t have fixed the underlying problem, the tight coupling between reads and writes and the latency of mandatory writeback-dataset rebuilds, so Palantir rebuilt the storage layer instead.<sup><a id="footnote-ref-21-3" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">5</a></sup> The <strong>Object Data Funnel</strong> is the linchpin of this shift: it asynchronously reads from raw Foundry datasets, streaming sources, and Action-generated user edits, and orchestrates indexing that data into the storage databases.<sup><a id="footnote-ref-21-4" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">5</a></sup> By removing the hard requirement for writeback datasets, OSv2 allows applications to perform governed operational writes without relying on tightly coupled writeback datasets, rather than treating the Ontology as a brittle caching layer over the true source of truth.<sup><a id="footnote-ref-29-2" href="#footnote-29" data-footnote-ref aria-describedby="footnote-label">18</a></sup> If a downstream pipeline needs a snapshot of the operational state, OSv2 can generate a &quot;materialization&quot; in a few minutes, which meaningfully cuts compute costs versus the old writeback-dataset rebuild cycle.<sup><a id="footnote-ref-29-3" href="#footnote-29" data-footnote-ref aria-describedby="footnote-label">18</a></sup></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Object Storage V1 (Phonograph)</strong></th>
+<th><strong>Object Storage V2 (OSv2)</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Write Mechanism</strong></td>
+<td>Requires &quot;writeback datasets,&quot; schema locked to the backing data.<sup><a id="footnote-ref-26-2" href="#footnote-26" data-footnote-ref aria-describedby="footnote-label">17</a></sup></td>
+<td>Edits handled natively via Funnel; materialized datasets are optional.<sup><a id="footnote-ref-26-3" href="#footnote-26" data-footnote-ref aria-describedby="footnote-label">17</a></sup></td>
+</tr>
+<tr>
+<td><strong>Indexing Model</strong></td>
+<td>Manual &quot;Render Hints&quot;; rigid batch/incremental triggers.<sup><a id="footnote-ref-30-2" href="#footnote-30" data-footnote-ref aria-describedby="footnote-label">19</a></sup></td>
+<td>Automated via Funnel; incremental indexing on by default.<sup><a id="footnote-ref-21-5" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">5</a></sup></td>
+</tr>
+<tr>
+<td><strong>Streaming Support</strong></td>
+<td>Not supported; relies on high-frequency micro-batching.<sup><a id="footnote-ref-30-3" href="#footnote-30" data-footnote-ref aria-describedby="footnote-label">19</a></sup></td>
+<td>Native streaming support for low-latency updates.<sup><a id="footnote-ref-21-6" href="#footnote-21" data-footnote-ref aria-describedby="footnote-label">5</a></sup></td>
+</tr>
+<tr>
+<td><strong>Large Query Handling</strong></td>
+<td>Proprietary index pruning, minimizing physical &quot;hits&quot; during traversal.<sup><a id="footnote-ref-28-2" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">20</a></sup></td>
+<td>Base index pruning, with on-demand Spark clusters for Search Arounds over 100,000 objects.<sup><a id="footnote-ref-28-3" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">20</a></sup></td>
+</tr>
+<tr>
+<td><strong>Edit Throughput</strong></td>
+<td>Constrained by batch limits and writeback dataset schedules.<sup><a id="footnote-ref-28-4" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">20</a></sup></td>
+<td>Handles up to 10,000 object edits in a single Action request before falling back to Spark.<sup><a id="footnote-ref-28-5" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">20</a></sup></td>
+</tr>
+</tbody></table>
+<p>Two overhead figures are worth citing precisely rather than a blended comparison: an Action that writes back into the Ontology carries an 18 compute-second minimum overhead (plus roughly 1 additional compute-second per object edited beyond the first), and a Function execution carries a flat 4 compute-second overhead.<sup><a id="footnote-ref-28-6" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">20</a></sup> These are the two baseline costs Palantir documents for the current system; there isn&#39;t a published like-for-like comparison of raw query-pruning overhead between OSv1 and OSv2 specifically, so that particular number is left out above rather than estimated.</p>
+<p>Phonograph is scheduled to be fully deprecated by June 30, 2026.<sup><a id="footnote-ref-27-3" href="#footnote-27" data-footnote-ref aria-describedby="footnote-label">16</a></sup> Given the storage overhead and schema-fragility issues above, it&#39;s a reasonable inference that the technical debt of maintaining legacy writeback datasets was becoming a real drag on margins, though that specific rationale isn&#39;t something Palantir has stated publicly, it&#39;s a plausible read of the incentives rather than a confirmed fact.</p>
+<hr>
+<h2>4. Security, Governance, and Purpose-Based Access Control</h2>
+<p>Palantir&#39;s security architecture is shaped heavily by its roots in the U.S. Intelligence Community and Department of Defense. Deployments in these sectors often operate under <strong>Impact Level 5 (IL5)</strong> and <strong>Impact Level 6 (IL6)</strong> classifications, which require strict isolation between unclassified, secret, and top-secret workloads.<sup><a id="footnote-ref-23-4" href="#footnote-23" data-footnote-ref aria-describedby="footnote-label">14</a></sup></p>
+<h3>Mandatory Access Controls and Security Propagation</h3>
+<p>Where traditional enterprise software leans on Discretionary Access Control (DAC) or Role-Based Access Control (RBAC), a resource owner or admin deciding who can view a table, Palantir layers in Mandatory Access Control (MAC) through &quot;Security Markings.&quot;<sup><a id="footnote-ref-35" href="#footnote-35" data-footnote-ref aria-describedby="footnote-label">21</a></sup> A marking is a persistent label (e.g., &quot;ITAR,&quot; &quot;PII,&quot; &quot;Operation Classified&quot;) attached to a row, column, or dataset.<sup><a id="footnote-ref-23-5" href="#footnote-23" data-footnote-ref aria-describedby="footnote-label">14</a></sup> The key feature is that markings propagate automatically: if an analyst joins a highly classified table with a broadly accessible one, the resulting joined dataset inherits the most restrictive markings of its inputs.<sup><a id="footnote-ref-23-6" href="#footnote-23" data-footnote-ref aria-describedby="footnote-label">14</a></sup> Security labels propagate automatically through derived datasets, so even a user with the right RBAC permissions to view a dashboard will see the underlying data algorithmically redacted if they lack the required marking clearance.<sup><a id="footnote-ref-11-3" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></p>
+<h3>Context Collapse and the Case for PBAC</h3>
+<p>MAC and Markings work well for classified data, but they create real administrative bottlenecks at the scale of a commercial or civilian government deployment. When Palantir deployed for the UK&#39;s National Health Service or for Airbus&#39;s global supply chain tracking, data governance teams reported being overwhelmed.<sup><a id="footnote-ref-14-3" href="#footnote-14" data-footnote-ref aria-describedby="footnote-label">7</a></sup></p>
+<p>The core problem resembles what privacy researchers elsewhere call <em>&quot;context collapse&quot;</em>, the flattening of many different audiences or purposes into one undifferentiated pool of access.<sup><a id="footnote-ref-37" href="#footnote-37" data-footnote-ref aria-describedby="footnote-label">22</a></sup> An administrator might see a request to access a <code>Patient_Records_DB</code> or a <code>Supplier_Financials</code> table and, under standard RBAC, can only grant access based on job title, there&#39;s no built-in mechanism to enforce <em>why</em> the user needs the data, or to revoke it once the task is done. That tends to accumulate into pockets of perpetual, unjustified access across the enterprise.<sup><a id="footnote-ref-37-2" href="#footnote-37" data-footnote-ref aria-describedby="footnote-label">22</a></sup></p>
+<p>A simpler fix would have been time-expiring Access Control Lists, but those still don&#39;t capture the intent behind the access, which makes post-incident auditing difficult.<sup><a id="footnote-ref-35-2" href="#footnote-35" data-footnote-ref aria-describedby="footnote-label">21</a></sup> Palantir&#39;s answer is <strong>Purpose-Based Access Control (PBAC)</strong>.<sup><a id="footnote-ref-37-3" href="#footnote-37" data-footnote-ref aria-describedby="footnote-label">22</a></sup> Under PBAC, users don&#39;t request access to a dataset, they request access to a predefined &quot;Purpose&quot; (e.g., &quot;Q3 Supply Chain Audit,&quot; &quot;Clinical Trial Phase II&quot;):<sup><a id="footnote-ref-37-4" href="#footnote-37" data-footnote-ref aria-describedby="footnote-label">22</a></sup></p>
+<ol>
+<li><strong>Data owners</strong> bind specific, minimized datasets to the Purpose, with a documented rationale.<sup><a id="footnote-ref-37-5" href="#footnote-37" data-footnote-ref aria-describedby="footnote-label">22</a></sup></li>
+<li><strong>Users</strong> apply to join the Purpose, also with a documented rationale for their need.<sup><a id="footnote-ref-37-6" href="#footnote-37" data-footnote-ref aria-describedby="footnote-label">22</a></sup></li>
+<li><strong>The platform</strong> restricts access strictly within a siloed, secure project space tied to that Purpose.[^36]</li>
+</ol>
+<p>This maps fairly directly onto the Fair Information Practice Principles&#39; doctrines of data minimization and purpose specification, and when the Purpose ends, or a user&#39;s justification becomes invalid, access to the entire data silo is revoked.<sup><a id="footnote-ref-37-7" href="#footnote-37" data-footnote-ref aria-describedby="footnote-label">22</a></sup></p>
+<hr>
+<h2>5. Apollo: Autonomous Deployment in Air-Gapped Environments</h2>
+<p>A standard B2B SaaS architecture assumes a centrally managed, multi-tenant environment running in a hyperscale public cloud, with upgrades and rollbacks orchestrated through CI/CD tools like Jenkins or GitLab.<sup><a id="footnote-ref-11-4" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></p>
+<p>Palantir&#39;s customer base doesn&#39;t fit that assumption. The company deploys software into classified government clouds, disconnected military networks, edge devices (like the <strong>TITAN</strong> mobile command vehicle or <strong>Skykit</strong> tactical backpacks), and heavily isolated on-premises data centers.<sup><a id="footnote-ref-6-3" href="#footnote-6" data-footnote-ref aria-describedby="footnote-label">3</a></sup> A traditional &quot;push&quot; deployment model doesn&#39;t work in these environments, if a CI/CD server can&#39;t reach the target over the network, deployment simply doesn&#39;t happen.<sup><a id="footnote-ref-11-5" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></p>
+<p>Palantir&#39;s answer is <strong>Apollo</strong>, an autonomous continuous delivery platform built around a decentralized &quot;pull&quot; model rather than a push model.<sup><a id="footnote-ref-33" href="#footnote-33" data-footnote-ref aria-describedby="footnote-label">23</a></sup> Apollo splits the delivery ecosystem into a central &quot;Hub&quot; (the control plane) and many &quot;Spoke&quot; environments (the target clusters, managed by a hardened Kubernetes runtime called <strong>Rubix</strong>, which is also what runs AIP and Foundry themselves and is accredited to FedRAMP High and DoD IL5/IL6 standards).<sup><a id="footnote-ref-51" href="#footnote-51" data-footnote-ref aria-describedby="footnote-label">24</a></sup></p>
+<ul>
+<li><strong>Artifact Bundling</strong>: Developers compile microservices into cryptographically signed artifact bundles that carry declarative deployment constraints (e.g., &quot;requires PostgreSQL v13,&quot; &quot;incompatible with Service X v2.1&quot;).<sup><a id="footnote-ref-11-6" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></li>
+<li><strong>Release Channels</strong>: Releases move through defined channels (Canary, Stable) rather than being pushed directly to servers.<sup><a id="footnote-ref-33-2" href="#footnote-33" data-footnote-ref aria-describedby="footnote-label">23</a></sup></li>
+<li><strong>Edge Agents</strong>: A local Apollo agent runs inside every Spoke environment. In air-gapped networks, signed bundles are transported physically, e.g., via secure hard drives, and loaded locally.<sup><a id="footnote-ref-11-7" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></li>
+<li><strong>Autonomous Execution</strong>: The local agent evaluates maintenance windows, validates dependencies, checks schema compatibility, and orchestrates the upgrade itself, with zero downtime where possible. If it detects a failure post-deployment, it can autonomously roll back to the last known-good state.<sup><a id="footnote-ref-39" href="#footnote-39" data-footnote-ref aria-describedby="footnote-label">25</a></sup></li>
+</ul>
+<p>Because Apollo also version-controls the Ontology schema itself, not just application code, it can roll back a multi-layered application state, code and schema together, without corrupting the underlying object databases; this is a reasonable inference from how the OMS governs schema shape, though Palantir hasn&#39;t laid it out in exactly these terms.<sup><a id="footnote-ref-11-8" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></p>
+<hr>
+<h2>6. Artificial Intelligence Platform (AIP) Architecture</h2>
+<p>AIP, launched in 2023, brought generative AI into the Palantir stack.<sup><a id="footnote-ref-6-4" href="#footnote-6" data-footnote-ref aria-describedby="footnote-label">3</a></sup> Rather than centering AIP around a proprietary foundation model, Palantir designed it as a model-agnostic orchestration layer, able to route requests to OpenAI&#39;s models, Anthropic&#39;s Claude, Google&#39;s Gemini, or self-hosted open-source models like Llama or Nemotron.<sup><a id="footnote-ref-43" href="#footnote-43" data-footnote-ref aria-describedby="footnote-label">26</a></sup></p>
+<h3>The &quot;k-LLM&quot; Paradigm</h3>
+<p>Palantir describes this internally as the <strong>&quot;k-LLM&quot;</strong> approach. It&#39;s often described in coverage as simple model-agnostic routing, picking one best or cheapest model per task, but Palantir&#39;s own framing (from CTO Shyam Sankar) is closer to an ensemble method: sending a query to several models at once, then running the results through a synthesis stage that compares the answers, surfaces disagreement between models, and produces a best-available answer along with a record of which models agreed or disagreed.<sup><a id="footnote-ref-52" href="#footnote-52" data-footnote-ref aria-describedby="footnote-label">27</a></sup> The practical reasoning for model-agnosticism specifically (as opposed to the ensemble method itself) is twofold:</p>
+<ul>
+<li><strong>Data Sovereignty</strong>: Defense and regulated commercial clients generally can&#39;t send proprietary, classified, or PII data to a public API endpoint. AIP lets them host models on their own internal GPU clusters, so model weights and sensitive data never leave the client&#39;s boundary.<sup><a id="footnote-ref-44" href="#footnote-44" data-footnote-ref aria-describedby="footnote-label">28</a></sup></li>
+<li><strong>Avoiding lock-in on a commoditizing layer</strong>: the foundation-model layer is changing fast, and agnosticism lets enterprises swap in better or cheaper models as they appear.<sup><a id="footnote-ref-43-2" href="#footnote-43" data-footnote-ref aria-describedby="footnote-label">26</a></sup></li>
+</ul>
+<h3>Grounding AI in the Ontology</h3>
+<p>The more consequential architectural choice is how AIP restricts the model. A naive generative AI setup points an LLM at a vector database and lets it answer via Retrieval-Augmented Generation, which creates a meaningful risk of hallucination and unauthorized data exposure, especially once an AI agent is asked to actually execute actions (rerouting a supply chain, flagging a target) rather than just answer questions.</p>
+<p>AIP doesn&#39;t point the model at raw files or a standalone vector database. It binds the LLM directly to the Ontology:<sup><a id="footnote-ref-11-9" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></p>
+<ul>
+<li><strong>Security Inheritance</strong>: The AI agent operates under the same MAC/DAC clearances and PBAC scope as the human user invoking it. It can&#39;t traverse a link to a classified object the user isn&#39;t cleared to see.<sup><a id="footnote-ref-11-10" href="#footnote-11" data-footnote-ref aria-describedby="footnote-label">10</a></sup></li>
+<li><strong>Action Constraints</strong>: If a model determines a supply chain route needs to change, it can&#39;t write a SQL query directly. It has to formulate a proposal and submit the intended change through a predefined Action Type, which enforces the same business logic, mandates human-in-the-loop approval where required (a hard requirement for anything touching kinetic military targeting), and logs the interaction immutably.<sup><a id="footnote-ref-43-3" href="#footnote-43" data-footnote-ref aria-describedby="footnote-label">26</a></sup></li>
+</ul>
+<p>The underlying idea is that LLMs are capable reasoning engines but unreliable, non-deterministic databases, so a secure enterprise AI setup subordinates the model to a deterministic, strongly-typed semantic layer: the model proposes, the Ontology governs, validates, and executes.</p>
+<hr>
+<h2>7. The Open-Source vs. Proprietary Boundary</h2>
+<p>Despite running a highly proprietary platform, Palantir has drawn specific, deliberate lines around what it open-sources.</p>
+<p><strong>Open-sourced: the presentation and SDK layers.</strong> Palantir maintains <strong>Blueprint</strong>, a React-based UI toolkit used to build data-dense web interfaces, and continues to optimize it (for example, the migration to Popover2 and the removal of wrapper elements to reduce DOM bloat and improve rendering performance).<sup><a id="footnote-ref-46" href="#footnote-46" data-footnote-ref aria-describedby="footnote-label">29</a></sup> It also provides the <strong>Ontology SDK (OSDK)</strong>, letting external developers generate strongly typed client libraries (TypeScript, Python, etc.) to interact with the Ontology from custom applications.<sup><a id="footnote-ref-23-7" href="#footnote-23" data-footnote-ref aria-describedby="footnote-label">14</a></sup></p>
+<p><strong>Proprietary: the orchestration and state engines.</strong> The core engines, OMS, OSS, Funnel, Apollo, the Rubix substrate, and AIP Logic, remain closed-source.<sup><a id="footnote-ref-1-2" href="#footnote-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup></p>
+<p>The logic behind the split seems fairly clear: Palantir can&#39;t anticipate every interface or workflow a customer might need, and forcing everyone onto native low-code builders like Workshop or Slate would alienate engineering teams who want to build their own portals or wire Ontology data into existing corporate applications.<sup><a id="footnote-ref-18-2" href="#footnote-18" data-footnote-ref aria-describedby="footnote-label">11</a></sup> Open-sourcing the presentation layer and the SDK encourages that kind of ecosystem adoption, while the computational value and the underlying &quot;data gravity&quot; stay inside the proprietary backend, since any application built on the OSDK is still fundamentally subject to Foundry&#39;s PBAC, MAC/DAC models, and compute billing.<sup><a id="footnote-ref-28-7" href="#footnote-28" data-footnote-ref aria-describedby="footnote-label">20</a></sup></p>
+<p>This pattern resembles what&#39;s sometimes called an &quot;hourglass&quot; architecture: broad, open, interoperable layers at the bottom (data storage, JDBC/REST integration) and the top (custom frontends via Blueprint), with a narrow, proprietary neck in the middle, the Ontology engines and Apollo&#39;s deployment orchestration, where the platform enforces governance and captures most of its commercial value.</p>
+<hr>
+<h2>8. Closing Summary</h2>
+<p>Palantir&#39;s architecture is a fairly direct product of the environments it was built for: intelligence work that couldn&#39;t tolerate hallucination or ungoverned data access, air-gapped military networks that couldn&#39;t rely on a live network connection to receive updates, and sprawling commercial supply chains where no two systems agreed on what a &quot;Purchase Order&quot; even was. Each major component traces back to one of those constraints, the Ontology exists because data catalogs and graph databases don&#39;t enforce business logic on writes; PBAC exists because RBAC alone can&#39;t capture why someone needs access, only that they&#39;re allowed to have it; Apollo&#39;s pull model exists because push deployment assumes a live connection that a lot of Palantir&#39;s customers simply don&#39;t have; and AIP&#39;s design binds language models to the Ontology specifically so an LLM can&#39;t act outside whatever the human operator invoking it is already cleared to do.</p>
+<p>None of this is unique to Palantir as abstract engineering, most of these ideas (purpose-based access, pull-based deployment, grounding LLMs in a governed data layer) exist elsewhere in some form. What&#39;s distinctive is that Palantir built all of them into one integrated stack, under the specific pressure of clients who couldn&#39;t tolerate the failure modes that a looser architecture would have allowed.</p>
+<hr>
+<h3>Works Cited</h3>
+<section class="footnotes" data-footnotes>
+<h2 id="footnote-label" class="sr-only">Footnotes</h2>
+<ol>
+<li id="footnote-1">
+<p>Integrated platforms: AIP, Foundry, and Apollo. Palantir. <a href="https://palantir.com/docs/foundry/architecture-center/platforms/">https://palantir.com/docs/foundry/architecture-center/platforms/</a> <a href="#footnote-ref-1" data-footnote-backref aria-label="Back to reference 1">↩</a> <a href="#footnote-ref-1-2" data-footnote-backref aria-label="Back to reference 1">↩<sup>2</sup></a></p>
+</li>
+<li id="footnote-2">
+<p>The History of Palantir Technologies: From Visionary Beginnings to a Global Data Powerhouse. Markets &amp; Stocks. <a href="http://markets.chroniclejournal.com/chroniclejournal/article/marketminute-2025-3-21-the-history-of-palantir-technologies-from-visionary-beginnings-to-a-global-data-powerhouse">http://markets.chroniclejournal.com/chroniclejournal/article/marketminute-2025-3-21-the-history-of-palantir-technologies-from-visionary-beginnings-to-a-global-data-powerhouse</a> <a href="#footnote-ref-2" data-footnote-backref aria-label="Back to reference 2">↩</a></p>
+</li>
+<li id="footnote-6">
+<p>Palantir. Wikipedia. <a href="https://en.wikipedia.org/wiki/Palantir">https://en.wikipedia.org/wiki/Palantir</a> <a href="#footnote-ref-6" data-footnote-backref aria-label="Back to reference 6">↩</a> <a href="#footnote-ref-6-2" data-footnote-backref aria-label="Back to reference 6">↩<sup>2</sup></a> <a href="#footnote-ref-6-3" data-footnote-backref aria-label="Back to reference 6">↩<sup>3</sup></a> <a href="#footnote-ref-6-4" data-footnote-backref aria-label="Back to reference 6">↩<sup>4</sup></a></p>
+</li>
+<li id="footnote-42">
+<p>Palantir Technologies. Grokipedia. <a href="https://grokipedia.com/page/Palantir_Technologies">https://grokipedia.com/page/Palantir_Technologies</a> <a href="#footnote-ref-42" data-footnote-backref aria-label="Back to reference 42">↩</a></p>
+</li>
+<li id="footnote-21">
+<p>Ontology architecture. Palantir. <a href="https://palantir.com/docs/foundry/object-backend/overview/">https://palantir.com/docs/foundry/object-backend/overview/</a> <a href="#footnote-ref-21" data-footnote-backref aria-label="Back to reference 21">↩</a> <a href="#footnote-ref-21-2" data-footnote-backref aria-label="Back to reference 21">↩<sup>2</sup></a> <a href="#footnote-ref-21-3" data-footnote-backref aria-label="Back to reference 21">↩<sup>3</sup></a> <a href="#footnote-ref-21-4" data-footnote-backref aria-label="Back to reference 21">↩<sup>4</sup></a> <a href="#footnote-ref-21-5" data-footnote-backref aria-label="Back to reference 21">↩<sup>5</sup></a> <a href="#footnote-ref-21-6" data-footnote-backref aria-label="Back to reference 21">↩<sup>6</sup></a></p>
+</li>
+<li id="footnote-12">
+<p>Palantir, Big Data Analytics, Cybersecurity, &amp; AI. Britannica Money. <a href="https://www.britannica.com/money/Palantir-Technologies-Inc">https://www.britannica.com/money/Palantir-Technologies-Inc</a> <a href="#footnote-ref-12" data-footnote-backref aria-label="Back to reference 12">↩</a></p>
+</li>
+<li id="footnote-14">
+<p>Palantir &amp; Airbus Partnership Overview. Palantir. <a href="https://www.palantir.com/assets/xrfr7uokpv1b/7uEHPTEM0MkKtBFcx2zh63/9d75da5b76439717ac95135b5012479e/Palantir-Airbus-Partnership_Overview.pdf">https://www.palantir.com/assets/xrfr7uokpv1b/7uEHPTEM0MkKtBFcx2zh63/9d75da5b76439717ac95135b5012479e/Palantir-Airbus-Partnership_Overview.pdf</a> <a href="#footnote-ref-14" data-footnote-backref aria-label="Back to reference 14">↩</a> <a href="#footnote-ref-14-2" data-footnote-backref aria-label="Back to reference 14">↩<sup>2</sup></a> <a href="#footnote-ref-14-3" data-footnote-backref aria-label="Back to reference 14">↩<sup>3</sup></a></p>
+</li>
+<li id="footnote-16">
+<p>Overview, Ontology. Palantir. <a href="https://palantir.com/docs/foundry/ontology/overview/">https://palantir.com/docs/foundry/ontology/overview/</a> <a href="#footnote-ref-16" data-footnote-backref aria-label="Back to reference 16">↩</a> <a href="#footnote-ref-16-2" data-footnote-backref aria-label="Back to reference 16">↩<sup>2</sup></a> <a href="#footnote-ref-16-3" data-footnote-backref aria-label="Back to reference 16">↩<sup>3</sup></a> <a href="#footnote-ref-16-4" data-footnote-backref aria-label="Back to reference 16">↩<sup>4</sup></a> <a href="#footnote-ref-16-5" data-footnote-backref aria-label="Back to reference 16">↩<sup>5</sup></a> <a href="#footnote-ref-16-6" data-footnote-backref aria-label="Back to reference 16">↩<sup>6</sup></a> <a href="#footnote-ref-16-7" data-footnote-backref aria-label="Back to reference 16">↩<sup>7</sup></a> <a href="#footnote-ref-16-8" data-footnote-backref aria-label="Back to reference 16">↩<sup>8</sup></a> <a href="#footnote-ref-16-9" data-footnote-backref aria-label="Back to reference 16">↩<sup>9</sup></a></p>
+</li>
+<li id="footnote-17">
+<p>Object and link types, Object types, Overview. Palantir. <a href="https://palantir.com/docs/foundry/object-link-types/object-types-overview/">https://palantir.com/docs/foundry/object-link-types/object-types-overview/</a> <a href="#footnote-ref-17" data-footnote-backref aria-label="Back to reference 17">↩</a></p>
+</li>
+<li id="footnote-11">
+<p>Inside Palantir AIP: How the World&#39;s Most Controversial AI Platform Actually Works. Towards AI. <a href="https://pub.towardsai.net/inside-palantir-aip-how-the-worlds-most-controversial-ai-platform-actually-works-9ec5b7a6c05a">https://pub.towardsai.net/inside-palantir-aip-how-the-worlds-most-controversial-ai-platform-actually-works-9ec5b7a6c05a</a> <a href="#footnote-ref-11" data-footnote-backref aria-label="Back to reference 11">↩</a> <a href="#footnote-ref-11-2" data-footnote-backref aria-label="Back to reference 11">↩<sup>2</sup></a> <a href="#footnote-ref-11-3" data-footnote-backref aria-label="Back to reference 11">↩<sup>3</sup></a> <a href="#footnote-ref-11-4" data-footnote-backref aria-label="Back to reference 11">↩<sup>4</sup></a> <a href="#footnote-ref-11-5" data-footnote-backref aria-label="Back to reference 11">↩<sup>5</sup></a> <a href="#footnote-ref-11-6" data-footnote-backref aria-label="Back to reference 11">↩<sup>6</sup></a> <a href="#footnote-ref-11-7" data-footnote-backref aria-label="Back to reference 11">↩<sup>7</sup></a> <a href="#footnote-ref-11-8" data-footnote-backref aria-label="Back to reference 11">↩<sup>8</sup></a> <a href="#footnote-ref-11-9" data-footnote-backref aria-label="Back to reference 11">↩<sup>9</sup></a> <a href="#footnote-ref-11-10" data-footnote-backref aria-label="Back to reference 11">↩<sup>10</sup></a></p>
+</li>
+<li id="footnote-18">
+<p>Object and link types. Palantir. <a href="https://palantir.com/docs/foundry/object-link-types/link-types-overview/">https://palantir.com/docs/foundry/object-link-types/link-types-overview/</a> <a href="#footnote-ref-18" data-footnote-backref aria-label="Back to reference 18">↩</a> <a href="#footnote-ref-18-2" data-footnote-backref aria-label="Back to reference 18">↩<sup>2</sup></a></p>
+</li>
+<li id="footnote-19">
+<p>Action types, Overview. Palantir. <a href="https://palantir.com/docs/foundry/action-types/overview/">https://palantir.com/docs/foundry/action-types/overview/</a> <a href="#footnote-ref-19" data-footnote-backref aria-label="Back to reference 19">↩</a></p>
+</li>
+<li id="footnote-20">
+<p>Palantir Foundry Design Patterns. Spencer Fuller. <a href="https://spencerfuller.dev/projects/foundry-patterns/">https://spencerfuller.dev/projects/foundry-patterns/</a> <a href="#footnote-ref-20" data-footnote-backref aria-label="Back to reference 20">↩</a></p>
+</li>
+<li id="footnote-23">
+<p>Palantir Security Solutions. Palantir. <a href="https://www.palantir.com/attributes/security/">https://www.palantir.com/attributes/security/</a> <a href="#footnote-ref-23" data-footnote-backref aria-label="Back to reference 23">↩</a> <a href="#footnote-ref-23-2" data-footnote-backref aria-label="Back to reference 23">↩<sup>2</sup></a> <a href="#footnote-ref-23-3" data-footnote-backref aria-label="Back to reference 23">↩<sup>3</sup></a> <a href="#footnote-ref-23-4" data-footnote-backref aria-label="Back to reference 23">↩<sup>4</sup></a> <a href="#footnote-ref-23-5" data-footnote-backref aria-label="Back to reference 23">↩<sup>5</sup></a> <a href="#footnote-ref-23-6" data-footnote-backref aria-label="Back to reference 23">↩<sup>6</sup></a> <a href="#footnote-ref-23-7" data-footnote-backref aria-label="Back to reference 23">↩<sup>7</sup></a></p>
+</li>
+<li id="footnote-25">
+<p>Use geospatial data in the Ontology. Palantir. <a href="https://palantir.com/docs/foundry/geospatial/ontology/">https://palantir.com/docs/foundry/geospatial/ontology/</a> <a href="#footnote-ref-25" data-footnote-backref aria-label="Back to reference 25">↩</a></p>
+</li>
+<li id="footnote-27">
+<p>Object Storage V1 (Phonograph) [Planned deprecation]. Palantir. <a href="https://palantir.com/docs/foundry/object-databases/object-storage-v1/">https://palantir.com/docs/foundry/object-databases/object-storage-v1/</a> <a href="#footnote-ref-27" data-footnote-backref aria-label="Back to reference 27">↩</a> <a href="#footnote-ref-27-2" data-footnote-backref aria-label="Back to reference 27">↩<sup>2</sup></a> <a href="#footnote-ref-27-3" data-footnote-backref aria-label="Back to reference 27">↩<sup>3</sup></a></p>
+</li>
+<li id="footnote-26">
+<p>Overview and getting started, Migrate from OSv1 to OSv2. Palantir. <a href="https://palantir.com/docs/foundry/object-backend/osv1-osv2-migration/">https://palantir.com/docs/foundry/object-backend/osv1-osv2-migration/</a> <a href="#footnote-ref-26" data-footnote-backref aria-label="Back to reference 26">↩</a> <a href="#footnote-ref-26-2" data-footnote-backref aria-label="Back to reference 26">↩<sup>2</sup></a> <a href="#footnote-ref-26-3" data-footnote-backref aria-label="Back to reference 26">↩<sup>3</sup></a></p>
+</li>
+<li id="footnote-29">
+<p>Object edits and materializations. Palantir. <a href="https://palantir.com/docs/foundry/object-edits/materializations/">https://palantir.com/docs/foundry/object-edits/materializations/</a> <a href="#footnote-ref-29" data-footnote-backref aria-label="Back to reference 29">↩</a> <a href="#footnote-ref-29-2" data-footnote-backref aria-label="Back to reference 29">↩<sup>2</sup></a> <a href="#footnote-ref-29-3" data-footnote-backref aria-label="Back to reference 29">↩<sup>3</sup></a></p>
+</li>
+<li id="footnote-30">
+<p>Object and link types, Metadata, Render hints. Palantir. <a href="https://palantir.com/docs/foundry/object-link-types/metadata-render-hints/">https://palantir.com/docs/foundry/object-link-types/metadata-render-hints/</a> <a href="#footnote-ref-30" data-footnote-backref aria-label="Back to reference 30">↩</a> <a href="#footnote-ref-30-2" data-footnote-backref aria-label="Back to reference 30">↩<sup>2</sup></a> <a href="#footnote-ref-30-3" data-footnote-backref aria-label="Back to reference 30">↩<sup>3</sup></a></p>
+</li>
+<li id="footnote-28">
+<p>Compute usage with Ontology queries. Palantir. <a href="https://palantir.com/docs/foundry/ontologies/query-compute-usage/">https://palantir.com/docs/foundry/ontologies/query-compute-usage/</a> <a href="#footnote-ref-28" data-footnote-backref aria-label="Back to reference 28">↩</a> <a href="#footnote-ref-28-2" data-footnote-backref aria-label="Back to reference 28">↩<sup>2</sup></a> <a href="#footnote-ref-28-3" data-footnote-backref aria-label="Back to reference 28">↩<sup>3</sup></a> <a href="#footnote-ref-28-4" data-footnote-backref aria-label="Back to reference 28">↩<sup>4</sup></a> <a href="#footnote-ref-28-5" data-footnote-backref aria-label="Back to reference 28">↩<sup>5</sup></a> <a href="#footnote-ref-28-6" data-footnote-backref aria-label="Back to reference 28">↩<sup>6</sup></a> <a href="#footnote-ref-28-7" data-footnote-backref aria-label="Back to reference 28">↩<sup>7</sup></a></p>
+</li>
+<li id="footnote-35">
+<p>Platform Governance on Palantir: A Guide to Secure Enterprise AI Scaling. Ethicrithm. <a href="https://ethicrithm.com/platform-governance-on-palantir-a-guide-to-secure-enterprise-ai-scaling/">https://ethicrithm.com/platform-governance-on-palantir-a-guide-to-secure-enterprise-ai-scaling/</a> <a href="#footnote-ref-35" data-footnote-backref aria-label="Back to reference 35">↩</a> <a href="#footnote-ref-35-2" data-footnote-backref aria-label="Back to reference 35">↩<sup>2</sup></a></p>
+</li>
+<li id="footnote-37">
+<p>Purpose-based Access Controls at Palantir. Palantir. <a href="https://www.palantir.com/purpose-based-access-controls/">https://www.palantir.com/purpose-based-access-controls/</a> <a href="#footnote-ref-37" data-footnote-backref aria-label="Back to reference 37">↩</a> <a href="#footnote-ref-37-2" data-footnote-backref aria-label="Back to reference 37">↩<sup>2</sup></a> <a href="#footnote-ref-37-3" data-footnote-backref aria-label="Back to reference 37">↩<sup>3</sup></a> <a href="#footnote-ref-37-4" data-footnote-backref aria-label="Back to reference 37">↩<sup>4</sup></a> <a href="#footnote-ref-37-5" data-footnote-backref aria-label="Back to reference 37">↩<sup>5</sup></a> <a href="#footnote-ref-37-6" data-footnote-backref aria-label="Back to reference 37">↩<sup>6</sup></a> <a href="#footnote-ref-37-7" data-footnote-backref aria-label="Back to reference 37">↩<sup>7</sup></a></p>
+</li>
+<li id="footnote-33">
+<p>Introduction, Apollo. Palantir. <a href="https://palantir.com/docs/apollo/core/introduction/">https://palantir.com/docs/apollo/core/introduction/</a> <a href="#footnote-ref-33" data-footnote-backref aria-label="Back to reference 33">↩</a> <a href="#footnote-ref-33-2" data-footnote-backref aria-label="Back to reference 33">↩<sup>2</sup></a></p>
+</li>
+<li id="footnote-51">
+<p>The Rubix substrate. Palantir. <a href="https://www.palantir.com/docs/foundry/architecture-center/rubix">https://www.palantir.com/docs/foundry/architecture-center/rubix</a> <a href="#footnote-ref-51" data-footnote-backref aria-label="Back to reference 51">↩</a></p>
+</li>
+<li id="footnote-39">
+<p>Palantir Apollo: The Layer Above AI Code Generation. Axentia. <a href="https://axentia.in/blog/palantir-apollo-the-layer-above-ai-code-generation">https://axentia.in/blog/palantir-apollo-the-layer-above-ai-code-generation</a> <a href="#footnote-ref-39" data-footnote-backref aria-label="Back to reference 39">↩</a></p>
+</li>
+<li id="footnote-43">
+<p>What Is Palantir AIP? A Deep Dive into Its Architecture, Use Cases, and Alternatives. Instinctools. <a href="https://www.instinctools.com/blog/palantir-aip/">https://www.instinctools.com/blog/palantir-aip/</a> <a href="#footnote-ref-43" data-footnote-backref aria-label="Back to reference 43">↩</a> <a href="#footnote-ref-43-2" data-footnote-backref aria-label="Back to reference 43">↩<sup>2</sup></a> <a href="#footnote-ref-43-3" data-footnote-backref aria-label="Back to reference 43">↩<sup>3</sup></a></p>
+</li>
+<li id="footnote-52">
+<p>AI-enabled operations: K-LLMs, not LLMs. Palantir Technologies (Shyam Sankar, AIPCon). LinkedIn. <a href="https://www.linkedin.com/posts/palantir-technologies_never-use-1-llm-when-you-can-use-k-llms-activity-7109622372021780480-eMPG">https://www.linkedin.com/posts/palantir-technologies_never-use-1-llm-when-you-can-use-k-llms-activity-7109622372021780480-eMPG</a> <a href="#footnote-ref-52" data-footnote-backref aria-label="Back to reference 52">↩</a></p>
+</li>
+<li id="footnote-44">
+<p>Palantir and Nvidia want to change who owns government AI. The New Stack. <a href="https://thenewstack.io/palantir-nvidia-sovereign-ai/">https://thenewstack.io/palantir-nvidia-sovereign-ai/</a> <a href="#footnote-ref-44" data-footnote-backref aria-label="Back to reference 44">↩</a></p>
+</li>
+<li id="footnote-46">
+<p>Popover2 migration, palantir/blueprint Wiki. GitHub. <a href="https://github.com/palantir/blueprint/wiki/Popover2-migration">https://github.com/palantir/blueprint/wiki/Popover2-migration</a> <a href="#footnote-ref-46" data-footnote-backref aria-label="Back to reference 46">↩</a></p>
+</li>
+</ol>
+</section>
+
+    <footer style="margin-top: 5rem; padding-top: 1rem; border-top: 1px solid var(--line); opacity: 0.4; transition: opacity 0.2s; font-size: 0.75rem; color: var(--muted);" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.4">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <span>Published Jul 18, 2026, 11:56 PM</span>
+          
+        </div>
+        <a href="https://github.com/itzsshashank/shashankshukla/commits/main/blogs/understanding-palantirs-architecture.md" target="_blank" rel="noopener noreferrer" style="text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;" onmouseover="this.style.borderColor='inherit'" onmouseout="this.style.borderColor='transparent'">History ↗</a>
+      </div>
+    </footer>
+  </article></section></main>
+    <footer class="site-footer"><div class="wrap"></div></footer>
+  </body>
+</html>
